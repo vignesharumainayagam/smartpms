@@ -1,0 +1,42 @@
+
+
+
+					<table>
+						<thead>
+							<tr>
+								<th><b> Functional Block </b></th>
+								<th><b> Total No. of Maintenances </b></th>
+								<th><b> Total No.of Maintenance due in next 30 days </b></th>
+								<th><b> Total No.of maintenances overdue as of today </b></th>
+								<th><b> % of Maintenance overdue </b></th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for(var m=0; m< data.length; m++) { %}
+
+								<tr>
+									<td>{{ data[m]["Functional Block"] }}</td>
+									<td>{{ data[m]["No of Maintenances"] }}</td>
+									<td>{{ data[m].next_30_days }}</td>
+									<td>{{ data[m].as_of_today }}</td>
+									<td>{{ data[m].as_of_today / data[m]["No of Maintenances"] * 100 }}%</td>
+								</tr>
+							{% } %}								
+						</tbody>
+					</table>
+
+
+	<style type="text/css">
+		container page-body
+
+		table, th, td {
+		   border: 1px solid black;
+		   font-size: 15px;
+		   margin-top: 10px;
+		   text-align: center;
+		}
+		.layout-main-section-wrapper{
+		    margin-bottom: 60px;
+		    margin-top: 34px;
+		}
+	</style>

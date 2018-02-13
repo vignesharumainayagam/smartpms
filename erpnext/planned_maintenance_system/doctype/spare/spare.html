@@ -1,0 +1,151 @@
+<section class="columns">
+	
+	<div class="column1">
+	{% for(var j=0; j< a.length; j++) { %}
+	
+	<li class="tree-node">
+	<span class="tree-link fb">	
+	 <i class="fa fa-fw fa-folder node-parent"></i>
+	  <a class=" tree-label grey h6">	 {{ a[j].item_name }}  </a> </span>
+		<ul class = "subfblist tree-children" style="display: none;">
+		{% for(var k=0; k< b.length; k++) { %}
+			
+			{% if(b[k].type == "Sub functional" && b[k].parent_item == a[j].item_name) { %} 
+			
+				<li class="tree-node">
+					<span class="tree-link sfb">
+					<i class="fa fa-fw fa-folder node-parent"></i>
+					<a class=" tree-label grey h6">{{ b[k].item_name }} </a></span>
+			
+			{% } %}		
+						<ul class = "eqlist tree-children" style="display: none;">
+						{% for(var l=0; l< c.length; l++) { %}
+							
+							{% if(c[l].type == "Equipment" && c[l].parent_item == b[k].item_name) { %} 
+								
+								<li class="tree-node"> 
+									<span class="tree-link eb">
+									<i class="fa fa-fw fa-folder node-parent"></i>
+									<a class="tree-label grey h6">{{ c[l].item_name }}</a></span>
+
+											<ul class = "subeqlist tree-children" style="display: none;">
+												{% for(var m=0; m< d.length; m++) { %}
+						
+													{% if(d[m].type == "Sub Equipment" && d[m].parent_item == c[l].item_name) { %} 
+													
+														<li class="tree-node"> 
+															<span class="tree-link seb">
+															<i class="fa fa-fw fa-folder node-parent"></i>
+															<a class="tree-label grey h6">{{ d[m].item_name }}
+															</a></span>
+														</li>
+													
+													{% } %}
+											
+											{% } %}
+											</ul>
+											</li>
+							{% } %}
+						
+						{% } %}
+						</ul>
+						</li> 
+		
+		{% } %}
+		</ul>
+		</li> 
+	{% } %}
+	</div>
+
+
+<script type="text/javascript">
+$( document ).ready(function() {
+
+   	$(".fb").click (function () {
+	if($(this).parent().find(".subfblist").css("display") == "none"){
+		$(this).parent().find(".subfblist").show();
+	}
+	else{
+	$(this).parent().find(".subfblist").hide();
+	 	}
+	 });
+
+   	$(".sfb").click (function () {
+	if($(this).parent().find(".eqlist").css("display") == "none")
+	$(this).parent().find(".eqlist").show();
+	else{
+	$(this).parent().find(".eqlist").hide();
+	 	}
+	 	});
+
+   	$(".eb").click (function () {
+	if($(this).parent().find(".subeqlist").css("display") == "none")
+	$(this).parent().find(".subeqlist").show();
+	else{
+	$(this).parent().find(".subeqlist").hide();
+	 	}
+	 	});
+
+
+  
+
+
+
+});
+
+
+</script>
+
+
+<style type="text/css">
+	.wrapper {
+	width: 100%;
+
+}
+
+
+.columns {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+	margin: 5px 0;
+}
+
+.column1 {
+	flex: 2;
+	border: 1px solid gray;
+	margin: 2px;
+	padding: 10px;
+	font-size: 11px;
+	&:first-child { margin-left: 0; }
+	&:last-child { margin-right: 0; }
+	
+}
+.column2 {
+	flex: 1;
+	border: 1px solid gray;
+	margin: 2px;
+	padding: 10px;
+	font-size: 11px;
+	&:first-child { margin-left: 0; }
+	&:last-child { margin-right: 0; }
+	
+}
+.column3 {
+	flex: 2;
+	border: 1px solid gray;
+	margin: 2px;
+	padding: 10px;
+	font-size: 11px;
+	&:first-child { margin-left: 0; }
+	&:last-child { margin-right: 0; }
+	
+}
+
+.page-body {
+	width: 100%;
+}
+.page-head{
+	width: 100%;
+}
+</style>

@@ -1,0 +1,22 @@
+{
+ "content": null, 
+ "creation": "2018-02-03 18:21:08.548254", 
+ "docstatus": 0, 
+ "doctype": "Page", 
+ "idx": 0, 
+ "modified": "2018-02-03 18:30:01.958905", 
+ "modified_by": "Administrator", 
+ "module": "Planned Maintenance System", 
+ "name": "Requisition", 
+ "owner": "Administrator", 
+ "page_name": "Requisition", 
+ "roles": [
+  {
+   "role": "Administrator"
+  }
+ ], 
+ "script": null, 
+ "standard": "Yes", 
+ "style": null, 
+ "system_page": 0
+}
