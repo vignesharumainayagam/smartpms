@@ -711,18 +711,31 @@ frappe.ui.form.on("Item", "item_name", function(frm, cdt, cdn){
 
 var d = locals[cdt][cdn];
 frappe.model.set_value(cdt, cdn, "item_code", d.item_name);
-
+frappe.model.set_value(cdt, cdn, "parent_item", frm.doc.item_name);
 if (frm.doc.type == "Functional") { 
-	frappe.model.set_value(cdt, cdn, "type", "Sub functional"); 
+	frappe.model.set_value(cdt, cdn, "type", "Sub functional");
+	frappe.model.set_value(cdt, cdn, "is_group", 1);
+	frappe.model.set_value(cdt, cdn, "is_fixed_asset", 1);
+	frappe.model.set_value(cdt, cdn, "asset_category", "Sanmar"); 
+
 }
 if (frm.doc.type == "Sub functional") { 
 	frappe.model.set_value(cdt, cdn, "type", "Equipment");
+	frappe.model.set_value(cdt, cdn, "is_group", 1);
+	frappe.model.set_value(cdt, cdn, "is_fixed_asset", 1);
+	frappe.model.set_value(cdt, cdn, "asset_category", "Sanmar"); 
 }
 if (frm.doc.type == "Equipment") { 
-	frappe.model.set_value(cdt, cdn, "type", "Sub Equipment"); 
+	frappe.model.set_value(cdt, cdn, "type", "Sub Equipment");
+	frappe.model.set_value(cdt, cdn, "is_group", 1);
+	frappe.model.set_value(cdt, cdn, "is_fixed_asset", 1);
+	frappe.model.set_value(cdt, cdn, "asset_category", "Sanmar");  
 }
 if (frm.doc.type == "Sub Equipment") { 
-frappe.model.set_value(cdt, cdn, "type", "Sub functional");
+	frappe.model.set_value(cdt, cdn, "type", "Sub functional");
+	frappe.model.set_value(cdt, cdn, "is_group", 1);
+	frappe.model.set_value(cdt, cdn, "is_fixed_asset", 1);
+	frappe.model.set_value(cdt, cdn, "asset_category", "Sanmar"); 
 }
 
 // frappe.model.set_value(cdt, cdn, "parent_item", frm.doc.item_name);
