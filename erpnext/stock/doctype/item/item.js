@@ -707,7 +707,7 @@ frappe.ui.form.on("Item", "onload", function (frm) {
 
 });
 
-frappe.ui.form.on("Item", "form_render", function(frm, cdt, cdn){
+frappe.ui.form.on("Item", "item_name", function(frm, cdt, cdn){
 
 var d = locals[cdt][cdn];
 frappe.model.set_value(cdt, cdn, "item_code", d.item_name);
