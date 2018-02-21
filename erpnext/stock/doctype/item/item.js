@@ -661,6 +661,7 @@ frappe.ui.form.on("Item", "validate", function (frm) {
 			});			
 	}
 
+
 });
 
 
@@ -706,31 +707,26 @@ frappe.ui.form.on("Item", "onload", function (frm) {
 
 });
 
+frappe.ui.form.on("Item", "form_render", function(frm, cdt, cdn){
 
-// frappe.ui.form.on("Item", "validate", function (frm) {
-// 	if(frm.doc.type == "Spare") {
-// 			frappe.call({
-// 				method: "frappe.client.get_value",
-// 				args: {
-// 					doctype: "Item",
-// 					filters: {"item_code": frm.doc.parent_item},
-// 					fieldname: "parent_item",
-// 				},
-// 				callback: function(r){
-// 						frappe.call({
-// 							method: "frappe.client.get_value",
-// 							args: {
-// 								doctype: "Item",
-// 								filters: {"item_code": r.message.parent_item},
-// 								fieldname: "type",
-// 							},
-// 						})							
-// 					}
-					
-// 				}
-// 			});	
-// 	}
+var d = locals[cdt][cdn];
+frappe.model.set_value(cdt, cdn, "item_code", d.item_name);
 
-// });
+if (frm.doc.type == "Functional") { 
+	frappe.model.set_value(cdt, cdn, "type", "Sub functional"); 
+}
+if (frm.doc.type == "Sub functional") { 
+	frappe.model.set_value(cdt, cdn, "type", "Equipment");
+}
+if (frm.doc.type == "Equipment") { 
+	frappe.model.set_value(cdt, cdn, "type", "Sub Equipment"); 
+}
+if (frm.doc.type == "Sub Equipment") { 
+frappe.model.set_value(cdt, cdn, "type", "Sub functional");
+}
 
+// frappe.model.set_value(cdt, cdn, "parent_item", frm.doc.item_name);
+
+
+});
 

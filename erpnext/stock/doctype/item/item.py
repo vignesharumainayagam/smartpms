@@ -78,6 +78,12 @@ class Item(WebsiteGenerator):
 	# 	if self.opening_stock:
 	# 		self.set_opening_stock()
 
+	def after_insert(self):
+		'''set opening stock and item price'''
+		frappe.db.sql("""Update `tabItem` set parent=%s, parentfield="table_165",parenttype= "Item" 
+						where item_name=%s""", (self.parent_item, self.item_name))
+			
+
 
 
 	def validate(self):
