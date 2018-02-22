@@ -34,5 +34,6 @@ def get_items():
 			 "next_30_days": len(maintenance_tasks_thirty), 
 			 "as_of_today": len(maintenance_tasks_today) })
 
+
 	return array
 
