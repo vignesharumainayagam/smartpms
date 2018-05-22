@@ -70,18 +70,12 @@ class Item(WebsiteGenerator):
 			new_asset.insert()
 			new_asset.submit()
 
+
+
 	# def after_insert(self):
 	# 	'''set opening stock and item price'''
-	# 	if self.standard_rate:
-	# 		self.add_price()
-
-	# 	if self.opening_stock:
-	# 		self.set_opening_stock()
-
-	def after_insert(self):
-		'''set opening stock and item price'''
-		frappe.db.sql("""Update `tabItem` set parent=%s, parentfield="table_165",parenttype= "Item" 
-						where item_name=%s""", (self.parent_item, self.item_name))
+	# 	frappe.db.sql("""Update `tabItem` set parent=%s, parentfield="table_165",parenttype= "Item"
+	# 					where item_name=%s""", (self.parent_item, self.name))
 			
 
 
@@ -925,7 +919,4 @@ def add_multiple_tasks(data, parent, is_group, element_type, item_group, is_stoc
 		# new_asset.insert()
 		# new_asset.submit()
 		
-		
-
-
-
+	

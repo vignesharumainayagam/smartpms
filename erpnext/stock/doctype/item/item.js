@@ -672,6 +672,8 @@ frappe.ui.form.on("Item", "validate", function (frm) {
 
 frappe.ui.form.on("Item", "onload", function (frm) {
 
+if(frm.doc.__islocal)
+{
 		if(frm.doc.type == "Functional" || frm.doc.type == "Sub functional" || frm.doc.type == "Equipment" || frm.doc.type == "Sub Equipment"){
 
 			frm.set_value("is_group", 1),
@@ -704,42 +706,235 @@ frappe.ui.form.on("Item", "onload", function (frm) {
 			frm.set_value("is_stock_item", 1),
 			frm.set_value("stock_uom", "Nos")
 		}	
+}
+});
+
+
+frappe.ui.form.on("Item", "onload", function(frm){
+
+if (frm.doc.type == "Functional") {
+
+
+/////////////////////////////////////// next level items ///////////////////////////	
+frappe.call({
+		method: "frappe.client.get_list",
+		args: {
+				doctype: "Item",
+				filters: {
+							"type": "Sub functional",
+							"parent_item": frm.doc.item_name
+						 },
+				fields: ["name"],
+			  },
+	    callback: function(r){
+	    	console.log(r.message)
+	    	frm.set_value("number_of_next_level", r.message.length)
+	    }
+			})
+
+//////////////////////////////////// number of spare //////////////////////////////
+
+frappe.call({
+		method: "frappe.client.get_list",
+		args: {
+				doctype: "Item",
+				filters: {
+							"type": "Spare",
+							"functional_block": frm.doc.item_name
+						 },
+				fields: ["name"],
+			  },
+	    callback: function(r){
+	    	console.log(r.message)
+	    	frm.set_value("number_of_spares", r.message.length)
+	    }
+			})
+
+///////////////////////////////////////// no of defects ///////////////////////////
+
+frappe.call({
+		method: "frappe.client.get_list",
+		args: {
+				doctype: "Asset Repair",
+				filters: {
+							// "type": "Spare",
+							"functional_block": frm.doc.item_name
+						 },
+				fields: ["name"],
+			  },
+	    callback: function(r){
+	    	console.log(r.message)
+	    	frm.set_value("number_of_defects", r.message.length)
+	    }
+			})
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////// 
+
+// if (frm.doc.type == "Sub functional") {
+// frappe.call({
+// 		method: "frappe.client.get_list",
+// 		args: {
+// 				doctype: "Item",
+// 				filters: {
+// 							"type": "Equipment",
+// 							"parent_item": frm.doc.item_name
+// 						 },
+// 				fields: ["name"],
+// 			  },
+// 	    callback: function(r){
+// 	    	console.log(r.message)
+// 	    	frm.set_value("number_of_next_level", r.message.length)
+// 	    }
+// 			})
+
+
+// frappe.call({
+// 		method: "frappe.client.get_list",
+// 		args: {
+// 				doctype: "Item",
+// 				filters: {
+// 							"type": "Spare",
+// 							"subfunctional_block": frm.doc.item_name
+// 						 },
+// 				fields: ["name"],
+// 			  },
+// 	    callback: function(r){
+// 	    	console.log(r.message)
+// 	    	frm.set_value("number_of_spares", r.message.length)
+// 	    }
+// 			})
+
+
+// ///////////////////////////////////////// no of defects ///////////////////////////
+
+// frappe.call({
+// 		method: "frappe.client.get_list",
+// 		args: {
+// 				doctype: "Asset Repair",
+// 				filters: {
+// 							// "type": "Spare",
+// 							"sub_functional_block": frm.doc.item_name
+// 						 },
+// 				fields: ["name"],
+// 			  },
+// 	    callback: function(r){
+// 	    	console.log(r.message)
+// 	    	frm.set_value("number_of_defects", r.message.length)
+// 	    }
+// 			})
+
+// }
+
+
+// if (frm.doc.type == "Equipment") {
+// frappe.call({
+// 		method: "frappe.client.get_list",
+// 		args: {
+// 				doctype: "Item",
+// 				filters: {
+// 							"type": "Sub Equipment",
+// 							"parent_item": frm.doc.item_name
+// 						 },
+// 				fields: ["name"],
+// 			  },
+// 	    callback: function(r){
+// 	    	console.log(r.message)
+// 	    	frm.set_value("number_of_next_level", r.message.length)
+// 	    }
+// 			})
+
+// frappe.call({
+// 		method: "frappe.client.get_list",
+// 		args: {
+// 				doctype: "Item",
+// 				filters: {
+// 							"type": "Spare",
+// 							"equipment_block": frm.doc.item_name
+// 						 },
+// 				fields: ["name"],
+// 			  },
+// 	    callback: function(r){
+// 	    	console.log(r.message)
+// 	    	frm.set_value("number_of_spares", r.message.length)
+// 	    }
+// 			})
+
+
+// ///////////////////////////////////////// no of defects ///////////////////////////
+
+// frappe.call({
+// 		method: "frappe.client.get_list",
+// 		args: {
+// 				doctype: "Asset Repair",
+// 				filters: {
+// 							// "type": "Spare",
+// 							"equipment_block": frm.doc.item_name
+// 						 },
+// 				fields: ["name"],
+// 			  },
+// 	    callback: function(r){
+// 	    	console.log(r.message)
+// 	    	frm.set_value("number_of_defects", r.message.length)
+// 	    }
+// 			})
+
+
+
+
+// }
+
+
+
+// if (frm.doc.type == "Sub Equipment") {
+
+// frappe.call({
+// 		method: "frappe.client.get_list",
+// 		args: {
+// 				doctype: "Item",
+// 				filters: {
+// 							"type": "Spare",
+// 							"sub_equipment": frm.doc.item_name
+// 						 },
+// 				fields: ["name"],
+// 			  },
+// 	    callback: function(r){
+// 	    	console.log(r.message)
+// 	    	frm.set_value("number_of_spares", r.message.length)
+// 	    }
+// 			})
+
+
+// ///////////////////////////////////////// no of defects ///////////////////////////
+
+// frappe.call({
+// 		method: "frappe.client.get_list",
+// 		args: {
+// 				doctype: "Asset Repair",
+// 				filters: {
+// 							// "type": "Spare",
+// 							"type": "Sub Equipment"
+// 						 },
+// 				fields: ["name"],
+// 			  },
+// 	    callback: function(r){
+// 	    	console.log(r.message)
+// 	    	frm.set_value("number_of_defects", r.message.length)
+// 	    }
+// 			})
+
+
+// }
 
 });
 
-frappe.ui.form.on("Item", "item_name", function(frm, cdt, cdn){
 
-var d = locals[cdt][cdn];
-frappe.model.set_value(cdt, cdn, "item_code", d.item_name);
-frappe.model.set_value(cdt, cdn, "parent_item", frm.doc.item_name);
-// if (frm.doc.type == "Functional") { 
-// 	frappe.model.set_value(cdt, cdn, "type", "Sub functional");
-// 	frappe.model.set_value(cdt, cdn, "is_group", 1);
-// 	frappe.model.set_value(cdt, cdn, "is_fixed_asset", 1);
-// 	frappe.model.set_value(cdt, cdn, "asset_category", "Sanmar"); 
 
-// }
-// if (frm.doc.type == "Sub functional") { 
-// 	frappe.model.set_value(cdt, cdn, "type", "Equipment");
-// 	frappe.model.set_value(cdt, cdn, "is_group", 1);
-// 	frappe.model.set_value(cdt, cdn, "is_fixed_asset", 1);
-// 	frappe.model.set_value(cdt, cdn, "asset_category", "Sanmar"); 
-// }
-// if (frm.doc.type == "Equipment") { 
-// 	frappe.model.set_value(cdt, cdn, "type", "Sub Equipment");
-// 	frappe.model.set_value(cdt, cdn, "is_group", 1);
-// 	frappe.model.set_value(cdt, cdn, "is_fixed_asset", 1);
-// 	frappe.model.set_value(cdt, cdn, "asset_category", "Sanmar");  
-// }
-// if (frm.doc.type == "Sub Equipment") { 
-// 	frappe.model.set_value(cdt, cdn, "type", "Sub functional");
-// 	frappe.model.set_value(cdt, cdn, "is_group", 1);
-// 	frappe.model.set_value(cdt, cdn, "is_fixed_asset", 1);
-// 	frappe.model.set_value(cdt, cdn, "asset_category", "Sanmar"); 
-// }
-
+// frappe.ui.form.on("Item", "item_name", function(frm, cdt, cdn){
+// var d = locals[cdt][cdn];
+// frappe.model.set_value(cdt, cdn, "item_code", d.item_name);
+// frappe.model.set_value(cdt, cdn, "is_group", 1);
 // frappe.model.set_value(cdt, cdn, "parent_item", frm.doc.item_name);
-
-
-});
-
+// frappe.model.set_value(cdt, cdn, "parent_item", frm.doc.item_name);
+// });
