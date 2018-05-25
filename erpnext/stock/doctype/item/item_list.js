@@ -16,6 +16,7 @@ frappe.listview_settings['Item'] = {
 			return [__("Variant"), "green", "variant_of,=," + doc.variant_of];
 		}
 	},
+	enable_tree:true,
 	onload: function () {
 		// $(".btn-primary").hide();	
 
