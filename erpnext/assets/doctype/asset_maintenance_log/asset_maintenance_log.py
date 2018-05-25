@@ -17,8 +17,8 @@ class AssetMaintenanceLog(Document):
 		if self.maintenance_status == "Completed" and not self.completion_date:
 			frappe.throw(_("Please select Completion Date for Completed Asset Maintenance Log"))
 
-		if self.maintenance_status != "Completed" and self.completion_date:
-			frappe.throw(_("Please select Maintenance Status as Completed or remove Completion Date"))
+		# if self.maintenance_status != "Completed" and self.completion_date:
+		# 	frappe.throw(_("Please select Maintenance Status as Completed or remove Completion Date"))
 
 	def on_submit(self):
 		if self.maintenance_status not in ['Completed', 'Cancelled']:
