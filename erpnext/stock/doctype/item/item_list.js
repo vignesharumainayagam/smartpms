@@ -25,7 +25,8 @@ frappe.listview_settings['Item'] = {
 	},	
 	refresh: function () {
 		// $(".btn-primary").hide();	
-	exec_treefilter();
+	// exec_treefilter();
+	// alert();
 
 
 	},

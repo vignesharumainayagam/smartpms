@@ -465,12 +465,44 @@ def get_functionalblocks(doctype, txt, searchfield,filters, start=0, page_len=50
 				})
 
 @frappe.whitelist(allow_guest=True)
-def get_subfunctionalblocks(doctype, txt, searchfield,filters, start=0, page_len=50):
+def get_subfunctionalblocks(doctype, txt, searchfield, filters, start=0, page_len=50):
 	return frappe.db.sql("""select name from `tabItem`
-			where type = %(type)s and functional_block=%(functional_block)s		
-			""".format(
-				start=start,
-				page_len=page_len), {					
-					"type": filters['type'],
-					"functional_block":filters['functional_block']
+				where type = %(type)s and functional_block=%(functional_block)s		
+				""".format(
+					start=start,
+					page_len=page_len), {
+				    "type": "Sub functional",
+					"functional_block":"CARGO EQUIPMENTS",
+					"txt": "%{0}%".format(txt),
+					"_txt": txt.replace('%', ''),					
 				})
+
+@frappe.whitelist(allow_guest=True)
+def get_equipment_block(doctype, txt, searchfield, filters, start=0, page_len=50):
+	return frappe.db.sql("""select name from `tabItem`
+				where type = %(type)s and functional_block=%(functional_block)s	and subfunctional_block=%(subfunctional_block)s	
+				""".format(
+					start=start,
+					page_len=page_len), {
+				    "type": "Sub functional",
+					"functional_block":"CARGO EQUIPMENTS",
+					"subfunctional_block":"",
+					"txt": "%{0}%".format(txt),
+					"_txt": txt.replace('%', ''),					
+				})
+
+@frappe.whitelist(allow_guest=True)
+def get_subequipment_block(doctype, txt, searchfield, filters, start=0, page_len=50):
+	return frappe.db.sql("""select name from `tabItem`
+				where type = %(type)s and functional_block=%(functional_block)s	and subfunctional_block=%(subfunctional_block)s	
+				""".format(
+					start=start,
+					page_len=page_len), {
+				    "type": "Sub functional",
+					"functional_block":"CARGO EQUIPMENTS",
+					"subfunctional_block":"",
+					"sub_equipment":"",
+					"txt": "%{0}%".format(txt),
+					"_txt": txt.replace('%', ''),					
+				})
+	
