@@ -13,6 +13,20 @@ frappe.ui.form.on('Material Request', {
 			'Production Order': 'Production Order'
 		}
 	},
+	refresh: function(frm){
+  
+    frm.set_query("sub_func_block", function(frm) {
+    	  console.log(frm.doc.functional_block)
+            return {
+                query: "erpnext.stock.doctype.material_request.material_request.get_subfunctionalblocks",
+                 filters: {
+                 'types':"Sub functional",
+                 'functional_block': frm.doc.functional_block
+               }
+
+            };
+        });
+	},
 	onload: function(frm) {
 		// add item, if previous view was item
 		erpnext.utils.add_item(frm);
@@ -29,6 +43,31 @@ frappe.ui.form.on('Material Request', {
 				filters: {'company': doc.company}
 			}
 		}
+    frm.set_query("functional_block", function(frm) {
+            return {
+                query: "erpnext.stock.doctype.material_request.material_request.get_functionalblocks",
+
+            };
+        });
+
+   
+		 frappe.call({
+				method: "erpnext.stock.doctype.material_request.material_request.get_members",
+				args: { 
+					"doctype":frm.doc.doctype,
+					 'types':"Sub functional",
+                 'functional_block': frm.doc.functional_block,
+					"txt":"",
+					"searchfield":"",
+					"start":0,
+					"page_len":35
+
+				},
+				callback: function(r) {
+                       console.log(r.message)
+				}
+			});
+
 	}
 });
 

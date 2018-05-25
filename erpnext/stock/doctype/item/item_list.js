@@ -19,6 +19,14 @@ frappe.listview_settings['Item'] = {
 	enable_tree:true,
 	onload: function () {
 		// $(".btn-primary").hide();	
+	exec_treefilter();
+
+
+	},	
+	refresh: function () {
+		// $(".btn-primary").hide();	
+	exec_treefilter();
+
 
 	},
 
