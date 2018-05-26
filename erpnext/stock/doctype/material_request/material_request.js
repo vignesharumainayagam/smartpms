@@ -5,6 +5,8 @@
 
 frappe.ui.form.on('Material Request', {
 	setup: function(frm) {
+		var forms=cur_frm.doc.functional_block
+    console.log(forms)
 		frm.custom_make_buttons = {
 			'Stock Entry': 'Issue Material',
 			'Purchase Order': 'Purchase Order',
@@ -13,6 +15,7 @@ frappe.ui.form.on('Material Request', {
 			'Production Order': 'Production Order'
 		}
 	},
+
 	onload: function(frm) {
 		// add item, if previous view was item
 		erpnext.utils.add_item(frm);
@@ -29,9 +32,51 @@ frappe.ui.form.on('Material Request', {
 				filters: {'company': doc.company}
 			}
 		}
+  
 	}
 });
 
+
+frappe.ui.form.on("Material Request", "refresh", function(frm) { 
+	 frm.set_query("functional_block", function(frm) {
+            return {
+                query: "erpnext.stock.doctype.material_request.material_request.get_functionalblocks",
+
+            };
+        });
+   	frm.set_query("sub_func_block", function(doc, cdt, cdn) {
+   		console.log(frm.doc.functional_block)
+				return{
+					query: "erpnext.stock.doctype.material_request.material_request.get_subfunctionalblocks",
+					filters: {
+						'functional_block': frm.doc.functional_block
+				    }
+				}
+	});  
+		frm.set_query("equipment_block", function(doc, cdt, cdn) {
+				return{
+					filters: {
+						'functional_block': frm.doc.functional_block ,
+						'subfunctional_block': frm.doc.sub_func_block
+					}
+				}
+	});  
+			frm.set_query("selected_equipment_subequipment", function(doc, cdt, cdn) {
+				return{
+					filters: {
+						'functional_block': frm.doc.functional_block ,
+						'subfunctional_block': frm.doc.sub_func_block,
+						'sub_equipment': frm.doc.equipment_block
+					}
+				}
+	});  
+});
+
+
+frappe.ui.form.on("Material Request", "functional_block", function(frm) { 
+	// var forms=cur_frm.doc.functional_block
+ //    console.log(forms)
+});
 frappe.ui.form.on("Material Request Item", {
 	qty: function (frm, doctype, name) {
 		var d = locals[doctype][name];

@@ -14,6 +14,7 @@ from erpnext.stock.stock_balance import update_bin_qty, get_indented_qty
 from erpnext.controllers.buying_controller import BuyingController
 from erpnext.manufacturing.doctype.production_order.production_order import get_item_details
 from erpnext.buying.utils import check_for_closed_status, validate_for_items
+from frappe.desk.reportview import get_match_cond, get_filters_cond
 
 form_grid_templates = {
 	"items": "templates/form_grid/material_request_grid.html"
@@ -425,3 +426,83 @@ def raise_production_orders(material_request):
 	if errors:
 		frappe.throw(_("Productions Orders cannot be raised for:") + '\n' + new_line_sep(errors))
 	return production_orders
+
+# @frappe.whitelist(allow_guest=True)
+# def get_members(doctype, txt, searchfield,filters, start=0, page_len=50):
+# 	ParticipatingMembers=frappe.db.sql("""select type from `tabItem`""")
+# 	MembersList=frappe.db.sql("""select name from `tabMember`""")
+# 	content=[]
+# 	for x in MembersList:
+# 		for y in ParticipatingMembers:
+# 			if y!=x:
+# 				content.append(x)
+# 	return content
+	
+@frappe.whitelist()
+def get_members(doctype, txt, searchfield, start, page_len, types, functional_block):
+	return frappe.db.sql("""select name from `tabItem`
+			where  type = %(type)s and functional_block=%(functional_block)s
+			order by
+				if(locate(%(_txt)s, name), locate(%(_txt)s, name), 99999),
+				idx desc,
+				`tabItem`.name asc""".format(
+				start=start,
+				page_len=page_len), {
+					"txt": "%{0}%".format(txt),
+					"_txt": txt.replace('%', ''),
+				    "type": types,
+			        "functional_block":functional_block
+			})
+
+@frappe.whitelist(allow_guest=True)
+def get_functionalblocks(doctype, txt, searchfield,filters, start=0, page_len=50):
+	return frappe.db.sql("""select name from `tabItem`
+			where type = %(type)s			
+			""".format(
+				start=start,
+				page_len=page_len), {					
+					"type": "Functional"
+				})
+
+@frappe.whitelist(allow_guest=True)
+def get_subfunctionalblocks(doctype, txt, searchfield, filters, start=0, page_len=50):
+	return frappe.db.sql("""select name from `tabItem`
+				where type = %(type)s and functional_block=%(functional_block)s		
+				""".format(
+					start=start,
+					page_len=page_len), {
+				    "type": "Sub functional",
+					"functional_block":"CARGO EQUIPMENTS",
+					"txt": "%{0}%".format(txt),
+					"_txt": txt.replace('%', ''),					
+				})
+
+@frappe.whitelist(allow_guest=True)
+def get_equipment_block(doctype, txt, searchfield, filters, start=0, page_len=50):
+	return frappe.db.sql("""select name from `tabItem`
+				where type = %(type)s and functional_block=%(functional_block)s	and subfunctional_block=%(subfunctional_block)s	
+				""".format(
+					start=start,
+					page_len=page_len), {
+				    "type": "Sub functional",
+					"functional_block":"CARGO EQUIPMENTS",
+					"subfunctional_block":"",
+					"txt": "%{0}%".format(txt),
+					"_txt": txt.replace('%', ''),					
+				})
+
+@frappe.whitelist(allow_guest=True)
+def get_subequipment_block(doctype, txt, searchfield, filters, start=0, page_len=50):
+	return frappe.db.sql("""select name from `tabItem`
+				where type = %(type)s and functional_block=%(functional_block)s	and subfunctional_block=%(subfunctional_block)s	
+				""".format(
+					start=start,
+					page_len=page_len), {
+				    "type": "Sub functional",
+					"functional_block":"CARGO EQUIPMENTS",
+					"subfunctional_block":"",
+					"sub_equipment":"",
+					"txt": "%{0}%".format(txt),
+					"_txt": txt.replace('%', ''),					
+				})
+	

@@ -11,5 +11,10 @@ frappe.ui.form.on('Asset Maintenance Log', {
 				}
 			};
 		});
+	},
+	completion_date: (frm) => {
+		if (frm.doc.completion_date > frappe.datetime.get_today) {
+			alert('please select a valid date.');
+		}
 	}
 });
