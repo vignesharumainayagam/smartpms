@@ -148,9 +148,16 @@ frappe.ui.form.on("Running Hours Entry", "type", function(frm) {
 
 frappe.ui.form.on("Running Hours Entry", "under", function(frm) {
 
-
-
-
+if (frm.doc.type == "Runing Hours(Only difference)") {
+    for (var i = 0; i < frm.doc.table_7.length; i++) {
+        cur_frm.get_field("table_7").grid.grid_rows[i].remove()
+    }
+}
+else if (frm.doc.type == "Total Running Hours(Actual Current Reading)") {
+    for (var i = 0; i < frm.doc.table_8.length; i++) {
+        cur_frm.get_field("table_8").grid.grid_rows[i].remove()
+    }
+}
     if (frm.doc.under) {
         frappe.call({
             method: "frappe.client.get_list",
@@ -168,9 +175,7 @@ frappe.ui.form.on("Running Hours Entry", "under", function(frm) {
                 // for (var e = 0; e < r.message.length; e++) {
 
                     if (frm.doc.type == "Runing Hours(Only difference)") {
-                    for (var i = 0; i < frm.doc.table_7.length; i++) {
-                        cur_frm.get_field("table_7").grid.grid_rows[i].remove()
-                    }
+
                     if (r.message) {
                         frm.doc.table_7 = [];
                         $.each(r.message, function(i, d) {
@@ -190,9 +195,6 @@ frappe.ui.form.on("Running Hours Entry", "under", function(frm) {
 
 
                     } else if (frm.doc.type == "Total Running Hours(Actual Current Reading)") {
-                            for (var i = 0; i < frm.doc.table_8.length; i++) {
-                                cur_frm.get_field("table_8").grid.grid_rows[i].remove()
-                            }
 
 
                     if (r.message) {
