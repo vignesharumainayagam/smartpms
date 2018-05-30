@@ -102,11 +102,11 @@ frappe.ui.form.on("Running Hours Entry", "onload", function(frm) {
                 frappe.model.add_child(cur_frm.doc, "Running Hours Entry Difference", "table_7");
                 $.each(r.message || [], function(e, v) {
                     var a='';
-                    if (r.message[e].last_updated_date) {
-                        a = frappe.datetime.add_days(r.message[e].last_updated_date, 1)}
+                    if (r.message.last_updated_date) {
+                        a = frappe.datetime.add_days(r.message.last_updated_date, 1)}
                     else{ a = '1990-01-01'}
                     frappe.model.set_value(v.doctype, v.name, "from_date", a)
-                    frappe.model.set_value(v.doctype, v.name, "equipment_name", r.message[e].item_code)
+                    frappe.model.set_value(v.doctype, v.name, "equipment_name", r.message.item_code)
                     frappe.model.set_value(v.doctype, v.name, "running_hours_before_update", r.message[e].running_hours)
                     frappe.model.set_value(v.doctype, v.name, "last_updated_on", r.message[e].last_update_date)
                 })
