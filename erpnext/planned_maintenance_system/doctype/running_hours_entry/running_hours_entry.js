@@ -101,8 +101,8 @@ frappe.ui.form.on("Running Hours Entry", "onload", function(frm) {
                         $.each(r.message, function(i, d) {
                             var a = '';
                             console.log(d)
-                            if (d.last_updated_date == null) {
-                                a = frappe.datetime.add_days(d.last_updated_date, 1)
+                            if (d.last_update_date == null) {
+                                a = frappe.datetime.add_days(d.last_update_date, 1)
                                 }
                             else{ a = '1990-01-01'}
                             var row = frappe.model.add_child(frm.doc, "Running Hours Entry Difference", "table_7");
