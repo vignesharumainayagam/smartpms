@@ -99,12 +99,34 @@ frappe.ui.form.on("Running Hours Entry", "onload", function(frm) {
                     if (r.message) {
                         frm.doc.table_7 = [];
                         $.each(r.message, function(i, d) {
+                            var a;
+                            if (d.last_updated_date) {
+                                a = frappe.datetime.add_days(d.last_updated_date, 1)}
+                            else{ a = '1990-01-01'}
                             var row = frappe.model.add_child(frm.doc, "Running Hours Entry Difference", "table_7");
                             row.equipment_name = d.item_code;
+                            row.from_date = a;
+                            row.running_hours_before_update = d.running_hours;
+                            row.last_updated_on = d.last_update_date;
                         });
                     }
                     refresh_field("table_7");
 
+                    if (r.message) {
+                        frm.doc.table_8 = [];
+                        $.each(r.message, function(i, d) {
+                            var a;
+                            if (d.last_updated_date) {
+                                a = frappe.datetime.add_days(d.last_updated_date, 1)}
+                            else{ a = '1990-01-01'}
+                            var row = frappe.model.add_child(frm.doc, "Running Hours Child Actual", "table_8");
+                            row.equipment_name = d.item_code;
+                            row.from_date = a;
+                            row.running_hours_before_update = d.running_hours;
+                            row.last_updated_on = d.last_update_date;
+                        });
+                    }
+                    refresh_field("table_8");
 
                 // frappe.model.add_child(cur_frm.doc, "Running Hours Entry Difference", "table_7");
                 // $.each(r.message || [], function(e, v) {
@@ -122,19 +144,19 @@ frappe.ui.form.on("Running Hours Entry", "onload", function(frm) {
 
 
 
-                frappe.model.add_child(cur_frm.doc, "Running Hours Child Actual", "table_8");
-                $.each(frm.doc.table_8 || [], function(e, v) {
-                    var a='';
-                    if (r.message[e].last_updated_date) {
-                        a = frappe.datetime.add_days(r.message[e].last_updated_date, 1)
-                         }
-                    else{a = '1990-01-01'}
-                	frappe.model.set_value(v.doctype, v.name, "from_date", a)
-                    frappe.model.set_value(v.doctype, v.name, "equipment_name", r.message[e].item_code)
-                    frappe.model.set_value(v.doctype, v.name, "running_hours_before_update", r.message[e].running_hours)
-                    frappe.model.set_value(v.doctype, v.name, "last_updated_on", r.message[e].last_update_date)
-                })
-                frm.refresh_field("table_8");
+                // frappe.model.add_child(cur_frm.doc, "Running Hours Child Actual", "table_8");
+                // $.each(frm.doc.table_8 || [], function(e, v) {
+                //     var a='';
+                //     if (r.message[e].last_updated_date) {
+                //         a = frappe.datetime.add_days(r.message[e].last_updated_date, 1)
+                //          }
+                //     else{a = '1990-01-01'}
+                // 	frappe.model.set_value(v.doctype, v.name, "from_date", a)
+                //     frappe.model.set_value(v.doctype, v.name, "equipment_name", r.message[e].item_code)
+                //     frappe.model.set_value(v.doctype, v.name, "running_hours_before_update", r.message[e].running_hours)
+                //     frappe.model.set_value(v.doctype, v.name, "last_updated_on", r.message[e].last_update_date)
+                // })
+                // frm.refresh_field("table_8");
 
 
             // }
