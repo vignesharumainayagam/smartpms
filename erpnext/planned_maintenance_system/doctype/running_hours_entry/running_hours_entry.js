@@ -100,7 +100,7 @@ frappe.ui.form.on("Running Hours Entry", "onload", function(frm) {
                         frm.doc.table_7 = [];
                         $.each(r.message, function(i, d) {
                             var a = '';
-                            if (d.last_updated_date != null) {
+                            if (d.last_updated_date == null) {
                                 a = frappe.datetime.add_days(d.last_updated_date, 1)
                                 }
                             else{ a = '1990-01-01'}
