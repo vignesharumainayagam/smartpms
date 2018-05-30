@@ -99,9 +99,10 @@ frappe.ui.form.on("Running Hours Entry", "onload", function(frm) {
                     if (r.message) {
                         frm.doc.table_7 = [];
                         $.each(r.message, function(i, d) {
-                            var a;
-                            if (d.last_updated_date) {
-                                a = frappe.datetime.add_days(d.last_updated_date, 1)}
+                            var a = '';
+                            if (1+1 == 2) {
+                                a = frappe.datetime.add_days(d.last_updated_date, 1)
+                                }
                             else{ a = '1990-01-01'}
                             var row = frappe.model.add_child(frm.doc, "Running Hours Entry Difference", "table_7");
                             row.equipment_name = d.item_code;
