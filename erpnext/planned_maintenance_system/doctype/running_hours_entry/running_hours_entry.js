@@ -118,8 +118,8 @@ frappe.ui.form.on("Running Hours Entry", "onload", function(frm) {
                         frm.doc.table_8 = [];
                         $.each(r.message, function(i, d) {
                             var a;
-                            if (d.last_updated_date) {
-                                a = frappe.datetime.add_days(d.last_updated_date, 1)}
+                            if (d.last_update_date) {
+                                a = frappe.datetime.add_days(d.last_update_date, 1)}
                             else{ a = '1990-01-01'}
                             var row = frappe.model.add_child(frm.doc, "Running Hours Child Actual", "table_8");
                             row.equipment_name = d.item_code;
