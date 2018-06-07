@@ -3,7 +3,7 @@
  "allow_guest_to_view": 0, 
  "allow_import": 0, 
  "allow_rename": 0, 
- "autoname": "field:maintenance_task", 
+ "autoname": "ast task .#####", 
  "beta": 0, 
  "creation": "2017-10-20 07:10:55.903571", 
  "custom": 0, 
@@ -43,7 +43,7 @@
    "reqd": 1, 
    "search_index": 0, 
    "set_only_once": 0, 
-   "unique": 1
+   "unique": 0
   }, 
   {
    "allow_bulk_edit": 0, 
@@ -927,7 +927,7 @@
  "issingle": 0, 
  "istable": 1, 
  "max_attachments": 0, 
- "modified": "2018-02-13 10:24:06.165212", 
+ "modified": "2018-05-31 15:23:24.065798", 
  "modified_by": "Administrator", 
  "module": "Assets", 
  "name": "Asset Maintenance Task", 

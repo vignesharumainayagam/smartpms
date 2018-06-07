@@ -36,6 +36,11 @@ class Item(WebsiteGenerator):
 			asset = frappe.db.get_all("Asset", filters={"item_code": self.name, "docstatus": 1}, limit=1)
 			self.set_onload("asset_exists", True if asset else False)
 
+	def onload(self):
+		data = frappe.db.get_list('Item', fields=['item_code', 'type', 'name'], order_by="type asc")
+		print(data)
+		return data
+			
 	def autoname(self):
 		if frappe.db.get_default("item_naming_by")=="Naming Series":
 			if self.variant_of:
@@ -919,4 +924,3 @@ def add_multiple_tasks(data, parent, is_group, element_type, item_group, is_stoc
 		# new_asset.insert()
 		# new_asset.submit()
 		
-	
