@@ -11,6 +11,12 @@ class ItemVariantExistsError(frappe.ValidationError): pass
 class InvalidItemAttributeValueError(frappe.ValidationError): pass
 class ItemTemplateCannotHaveStock(frappe.ValidationError): pass
 
+
+@frappe.whitelist()
+def for_table(parent=None):
+	data = frappe.db.sql("""select item_code from `tabItem` where parent_item = %s""",(parent))
+	return data
+
 @frappe.whitelist()
 def get_variant(template, args=None, variant=None, manufacturer=None,
 	manufacturer_part_no=None):

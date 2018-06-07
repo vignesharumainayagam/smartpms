@@ -56,15 +56,164 @@ frappe.treeview_settings['Item'] = {
 				},
 				btnClass: "hidden-xs"
 		},
+		{
+				label:__("Add"),
+				click: function(node) {
+					// console.log(calculate_level(node));
+					construct_args(node);
+				},
+				btnClass: "hidden-xs"
+		},
 
 	],
 	extend_toolbar: false,
 
 }
 
+function calculate_level(node) {
+	console.log(node)
+	var total_levels = [];
 
+				frappe.call({
+				method: "frappe.client.get_list",
+			
+				args: {
+				doctype: "Asset Category",
+				fields: ["item_level"],
+				},
+				async: false,
+				callback: function(r) {
+					if (r.message) {					
+						for(var i = 0; i<r.message.length; i++){
+							total_levels.push(r.message[i].item_level);
+						}
+						total_levels = total_levels.sort();
+					}
+					else{
+						frappe.msgprint("Please Create the Asset Categories and continue !")
+					}
+				}
+				});			
+	
+
+	var parent_name = null;
+	if (node.label) {
+	if (node.label != 'All Items')
+	{parent_name = node.label;}
+	if (node.label == 'All Items')
+	{parent_name = null;}
+	
+	
+	}
+	else {
+		parent_name = null;
+	}
+	
+
+	var parent_asset_category = '';
+	if(parent_name){
+		frappe.call({
+					method: 'frappe.client.get_value',
+					args: {
+						'doctype': 'Asset',
+						'filters': {'name': parent_name},
+						'fieldname': ['asset_category']
+					},
+					async: false,
+					callback: function(r) {
+						if (r.message.asset_category) {
+						parent_asset_category = r.message.asset_category;}
+						else{parent_asset_category = null}
+					
+					}
+					});	
+
+	}
+	else{
+		parent_asset_category = null
+	}
+
+
+	var parent_category_level = 0;
+		if (parent_asset_category) {
+			frappe.call({
+			method: 'frappe.client.get_value',
+			args: {
+				'doctype': 'Asset Category',
+				'filters': {'name': parent_asset_category},
+				'fieldname': ['item_level']
+			},
+			async: false,
+			callback: function(r) {
+
+				if (r.message.item_level){parent_category_level = r.message.item_level;}
+				else{parent_category_level = 0;}
+			}
+			});
+		}
+		else{
+			parent_category_level = 0;
+		}
+
+	var current_level = parseInt(parent_category_level) + 1;
+
+	var current_level_type = '';
+	frappe.call({
+				method: 'frappe.client.get_value',
+				args: {
+					'doctype': 'Asset Category',
+					'filters': {'item_level': current_level},
+					'fieldname': ['name']
+				},
+				async: false,
+				callback: function(r) {
+
+					if (r.message.name){current_level_type = r.message.name;}
+					else{frappe.msgprint("Please Create the Required level of Asset Categories and continue !")}
+				}
+				});
+
+
+	var current_level_folder = '';
+	frappe.call({
+				method: 'frappe.client.get_value',
+				args: {
+					'doctype': 'Asset Category',
+					'filters': {'item_level': current_level},
+					'fieldname': ['is_folder']
+				},
+				async: false,
+				callback: function(r) {
+
+					current_level_folder = r.message.is_folder;
+				
+				}
+				});
+
+	return {'total_levels':total_levels, 'parent_name':parent_name, 'parent_asset_category':parent_asset_category, 'parent_category_level':parent_category_level, 'current_level':current_level, 'current_level_type':current_level_type, 'current_level_folder':current_level_folder}
+}
+
+function construct_args(node) {
+var r = calculate_level(node);
+console.log(r);
+	if(r.total_levels.includes(r.current_level)){
+
+		frappe.new_doc("Item", {
+								"type": r.current_level_type,
+								"parent_item": r.parent_name,
+								"is_group": r.current_level_folder,
+							});
+	
+	}
+	else if(! total_levels.includes(r.current_level)){
+		frappe.msgprint("You cant create any child at this level")
+	}
+	 
+}
 
 function add_child(node) {
+
+calculate_level(node)
 
 if (node.parent_label == null) {
 	frappe.new_doc("Item", {
@@ -115,7 +264,7 @@ else {
 								"functional_block": node.parent_node.parent_label
 							});			
 				}
-				else  {
+				else {
 							frappe.msgprint("You cant create any child at this level")		
 				}
 					}

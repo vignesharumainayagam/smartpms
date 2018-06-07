@@ -242,11 +242,6 @@ frappe.ui.form.on("Running Hours Child Actual", "total_running_hours", function(
 });
 
 
-
-
-
-
-
 frappe.ui.form.on("Running Hours Entry Difference", "running_hours", function(frm, cdt, cdn) {
     var d = locals[cdt][cdn];
     var total = 0;
@@ -263,3 +258,32 @@ frappe.ui.form.on("Running Hours Entry Difference", "running_hours", function(fr
     }   
 
 });
+
+
+frappe.ui.form.on("Running Hours Child Actual", "to_date", function(frm, cdt, cdn) {
+    var d = locals[cdt][cdn];
+   if (d.to_date){ 
+        if (d.to_date <= d.from_date ) {
+            frappe.model.set_value(cdt, cdn, "to_date", null);
+            frappe.throw('To date should be greater then from date')
+
+       }
+   }
+       
+
+});
+
+frappe.ui.form.on("Running Hours Entry Difference", "to_date", function(frm, cdt, cdn) {
+    var d = locals[cdt][cdn];
+    var d = locals[cdt][cdn];
+   if (d.to_date){ 
+        if (d.to_date <= d.from_date ) {
+            frappe.model.set_value(cdt, cdn, "to_date", null);
+            frappe.throw('To date should be greater then from date')
+       }
+   }
+       
+
+});
+
+

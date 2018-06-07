@@ -1,0 +1,27 @@
+{
+ "add_total_row": 0, 
+ "apply_user_permissions": 1, 
+ "creation": "2018-02-22 17:12:12.392190", 
+ "disabled": 0, 
+ "docstatus": 0, 
+ "doctype": "Report", 
+ "idx": 0, 
+ "is_standard": "Yes", 
+ "modified": "2018-06-07 12:37:08.526586", 
+ "modified_by": "Administrator", 
+ "module": "Assets", 
+ "name": "DefectList Report", 
+ "owner": "Administrator", 
+ "query": "select DF.defect_list_from as `Generated From::100`,\nCASE\n    WHEN IT.type='Functional' THEN IT.item_name\n    WHEN IT.type='Sub functional' THEN (select parent_item from `tabItem` where item_code=IT.item_code)\n    WHEN IT.type='Equipment' THEN (select parent_item from `tabItem` where item_code=(select parent_item from `tabItem` where item_code=IT.item_code))\n    ELSE (select parent_item from `tabItem` where item_code=(select parent_item from `tabItem` where item_code=(select parent_item from `tabItem` where item_code=IT.item_code)))\nEND\nas `Function::100`,\nCASE\n    WHEN IT.type='Functional' THEN IT.item_name\n    WHEN IT.type='Sub functional' THEN  IT.item_name\n    WHEN IT.type='Equipment' THEN (select parent_item from `tabItem` where item_code=IT.item_code)\n    ELSE  (select parent_item from `tabItem` where item_code=(select parent_item from `tabItem` where item_code=IT.item_code)) \nEND\nas Category,\nIT.item_name as Item,\nDF.description as `Defect Description`,\nDF.risk_level as `Risk Level`,\nDF.repair_status as `Status`,\nDF.failure_date as `Entry Date`,\nDF.target_date as `Target Date`,\nDF.completion_date as `Completion Date`,\nCASE\n    WHEN DF.shore_assistance_required=0 THEN \"No\"\n    WHEN DF.shore_assistance_required=1 THEN \"Yes\"\n    ELSE \"No\" \nEND\nas `Shore required`,\nDF.spares_required_reference as `Spares/ stores required reference`\n\nfrom `tabAsset Repair` DF\ninner join `tabItem` IT\non DF.item_code=IT.item_code", 
+ "ref_doctype": "Asset Repair", 
+ "report_name": "DefectList Report", 
+ "report_type": "Script Report", 
+ "roles": [
+  {
+   "role": "Manufacturing Manager"
+  }, 
+  {
+   "role": "Quality Manager"
+  }
+ ]
+}
