@@ -10,31 +10,31 @@ def get_data():
 					"type": "doctype",
 					"name": "Item",
 				},
-				{
-					"type": "doctype",
-					"name": "Defect",
+				# {
+				# 	"type": "doctype",
+				# 	"name": "Defect",
 					
-				},
+				# },
 
 			]
 		},
-		{
-			"label": _("Asset"),
-			"items": [
-				{
-					"type": "doctype",
-					"name": "Asset",
-				},
-				{
-					"type": "doctype",
-					"name": "Asset Category",
-				},
-				{
-					"type": "doctype",
-					"name": "Maintenance Type",
-				},
-			]
-		},
+		# {
+		# 	"label": _("Asset"),
+		# 	"items": [
+		# 		{
+		# 			"type": "doctype",
+		# 			"name": "Asset",
+		# 		},
+		# 		{
+		# 			"type": "doctype",
+		# 			"name": "Asset Category",
+		# 		},
+		# 		{
+		# 			"type": "doctype",
+		# 			"name": "Maintenance Type",
+		# 		},
+		# 	]
+		# },
 		{
 			"label": _("Maintenance"),
 			"items": [
@@ -61,7 +61,7 @@ def get_data():
 			]
 		},
 		{
-			"label": _("Running Hours & Circulating Components"),
+			"label": _("Running Hours"),
 			"items": [
 				{
 					"type": "doctype",
@@ -71,22 +71,22 @@ def get_data():
 					"type": "doctype",
 					"name": "Running Hours Log",
 				},
-				{
-					"type": "doctype",
-					"name": "Circulating Components",
-				},
-				{
-					"type": "doctype",
-					"name": "Circulating Components Log",
-				},
-				{
-					"type": "doctype",
-					"name": "Spare Group",
-				},
-				{
-					"type": "doctype",
-					"name": "Spare",
-				},				
+				# {
+				# 	"type": "doctype",
+				# 	"name": "Circulating Components",
+				# },
+				# {
+				# 	"type": "doctype",
+				# 	"name": "Circulating Components Log",
+				# },
+				# {
+				# 	"type": "doctype",
+				# 	"name": "Spare Group",
+				# },
+				# {
+				# 	"type": "doctype",
+				# 	"name": "Spare",
+				# },				
 			]
 		},
 		{
@@ -102,12 +102,12 @@ def get_data():
 					"type": "doctype",
 					"name": "Material Request",
 				},
-				{
-					"type": "page",
-					"name": "dashboard",
-					"label": _("Dashboard"),
-					"description": _("Dashboard")
-				},
+				# {
+				# 	"type": "page",
+				# 	"name": "dashboard",
+				# 	"label": _("Dashboard"),
+				# 	"description": _("Dashboard")
+				# },
 			]
 		},
 		{

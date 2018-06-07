@@ -1,6 +1,9 @@
 // Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
 // License: GNU General Public License v3. See license.txt
 
+
+
+
 frappe.provide("erpnext.item");
 
 frappe.ui.form.on("Item", {
@@ -24,6 +27,72 @@ frappe.ui.form.on("Item", {
 
 	type: function(frm){
 	
+
+	},
+
+	onload: function (frm) {
+
+		var doctype;
+		var parent;
+		if(frm.doc.type == 'Functional'){
+			doctype = 'Sub functional'
+			parent = frm.doc.name;
+		}
+		else if(frm.doc.type == 'Sub functional'){
+			doctype = 'Equipment'
+			parent = frm.doc.name; 
+		}
+		else if(frm.doc.type == 'Equipment'){
+			doctype = 'Sub Equipment'
+			parent = frm.doc.name; 
+		}
+		else if(frm.doc.type == 'Sub Equipment'){
+			doctype = 'Spare Group'
+			parent = frm.doc.name; 
+		}
+		else if(frm.doc.type == 'Spare Group'){
+			doctype = 'Spare'
+			parent = frm.doc.name; 
+		}
+			
+
+
+		{
+			frappe.call({
+					method:"erpnext.controllers.item_variant.for_table",
+					args:{
+						'parent': parent,
+					},
+					callback: function (r) {
+						if (r) {
+						var array1 = [];	
+						for (var i = 0;  i < r.message.length; i++) {
+								console.log(r[i])
+								var array2 = [];
+								array2.push(r.message[i][0]);
+								array1.push(array2);
+							}	
+						console.log(array1)	
+						$("div[data-fieldname=html_173]").html('<h1>dasdas</h1>');
+						var grid = new DataTable(document.querySelector('[data-fieldname=html_173]'), 
+						{
+						  	data: {
+								  
+								    columns: [ {name: doctype, content: doctype, width: 600}],
+								    rows: array1,
+								  
+								  },
+								  setCellHeight: 500,
+								  addSerialNoColumn: true,
+						    	  
+								  
+						});
+		
+		
+						}
+					},
+				});
+		}
 
 	},
 
@@ -301,7 +370,7 @@ $.extend(erpnext.item, {
 			frappe.call({
 				method:"erpnext.controllers.item_variant.get_variant",
 				args: data,
-				callback: function(r) {
+				callback:  function(r) {
 					var doclist = frappe.model.sync(r.message);
 					dialog.hide();
 					frappe.set_route("Form", doclist[0].doctype, doclist[0].name);
@@ -695,16 +764,16 @@ if(frm.doc.__islocal)
 		else if(frm.doc.type == "Spare Group"){
 
 			frm.set_value("is_group", 1),
-			frm.set_value("is_fixed_asset", 0),
-			frm.set_value("is_stock_item", 1),
-			frm.set_value("stock_uom", "Nos")
+			frm.set_value("is_fixed_asset", 1),
+			frm.set_value("is_stock_item", ),
+			frm.set_value("stock_uom", null)
 		}
 		else if(frm.doc.type == "Spare"){
 			// alert("HG")
 			frm.set_value("is_group", 0),
-			frm.set_value("is_fixed_asset", 0),
-			frm.set_value("is_stock_item", 1),
-			frm.set_value("stock_uom", "Nos")
+			frm.set_value("is_fixed_asset", 1),
+			frm.set_value("is_stock_item", 0),
+			frm.set_value("stock_uom", null)
 		}	
 }
 });
@@ -712,63 +781,63 @@ if(frm.doc.__islocal)
 
 frappe.ui.form.on("Item", "onload", function(frm){
 
-if (frm.doc.type == "Functional") {
+// if (frm.doc.type == "Functional") {
 
 
-/////////////////////////////////////// next level items ///////////////////////////	
-frappe.call({
-		method: "frappe.client.get_list",
-		args: {
-				doctype: "Item",
-				filters: {
-							"type": "Sub functional",
-							"parent_item": frm.doc.item_name
-						 },
-				fields: ["name"],
-			  },
-	    callback: function(r){
-	    	console.log(r.message)
-	    	frm.set_value("number_of_next_level", r.message.length)
-	    }
-			})
+// /////////////////////////////////////// next level items ///////////////////////////	
+// frappe.call({
+// 		method: "frappe.client.get_list",
+// 		args: {
+// 				doctype: "Item",
+// 				filters: {
+// 							"type": "Sub functional",
+// 							"parent_item": frm.doc.item_name
+// 						 },
+// 				fields: ["name"],
+// 			  },
+// 	    callback: function(r){
+// 	    	console.log(r.message)
+// 	    	frm.set_value("number_of_next_level", r.message.length)
+// 	    }
+// 			})
 
-//////////////////////////////////// number of spare //////////////////////////////
+// //////////////////////////////////// number of spare //////////////////////////////
 
-frappe.call({
-		method: "frappe.client.get_list",
-		args: {
-				doctype: "Item",
-				filters: {
-							"type": "Spare",
-							"functional_block": frm.doc.item_name
-						 },
-				fields: ["name"],
-			  },
-	    callback: function(r){
-	    	console.log(r.message)
-	    	frm.set_value("number_of_spares", r.message.length)
-	    }
-			})
+// frappe.call({
+// 		method: "frappe.client.get_list",
+// 		args: {
+// 				doctype: "Item",
+// 				filters: {
+// 							"type": "Spare",
+// 							"functional_block": frm.doc.item_name
+// 						 },
+// 				fields: ["name"],
+// 			  },
+// 	    callback: function(r){
+// 	    	console.log(r.message)
+// 	    	frm.set_value("number_of_spares", r.message.length)
+// 	    }
+// 			})
 
-///////////////////////////////////////// no of defects ///////////////////////////
+// ///////////////////////////////////////// no of defects ///////////////////////////
 
-frappe.call({
-		method: "frappe.client.get_list",
-		args: {
-				doctype: "Asset Repair",
-				filters: {
-							// "type": "Spare",
-							"functional_block": frm.doc.item_name
-						 },
-				fields: ["name"],
-			  },
-	    callback: function(r){
-	    	console.log(r.message)
-	    	frm.set_value("number_of_defects", r.message.length)
-	    }
-			})
+// frappe.call({
+// 		method: "frappe.client.get_list",
+// 		args: {
+// 				doctype: "Asset Repair",
+// 				filters: {
+// 							// "type": "Spare",
+// 							"functional_block": frm.doc.item_name
+// 						 },
+// 				fields: ["name"],
+// 			  },
+// 	    callback: function(r){
+// 	    	console.log(r.message)
+// 	    	frm.set_value("number_of_defects", r.message.length)
+// 	    }
+// 			})
 
-}
+// }
 
 /////////////////////////////////////////////////////////////////////////////////////// 
 

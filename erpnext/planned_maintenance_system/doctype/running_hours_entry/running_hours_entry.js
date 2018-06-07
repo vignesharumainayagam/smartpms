@@ -94,34 +94,40 @@ frappe.ui.form.on("Running Hours Entry", "onload", function(frm) {
             limit_page_length: 2000
         },
         callback: function(r) {
-            console.log(r.message)
-            for (var e = 0; e < r.message.length; e++) {
+            
+                    if (r.message) {
+                        frm.doc.table_7 = [];
+                        $.each(r.message, function(i, d) {
+                            var a = '';
+                            if (d.last_update_date) {
+                                a = frappe.datetime.add_days(d.last_update_date, 1)
+                                }
+                            else{ a = '1990-01-01'}
+                            var row = frappe.model.add_child(frm.doc, "Running Hours Entry Difference", "table_7");
+                            row.equipment_name = d.item_code;
+                            row.from_date = a;
+                            row.running_hours_before_update = d.running_hours;
+                            row.last_updated_on = d.last_update_date;
+                        });
+                    }
+                    refresh_field("table_7");
 
+                    if (r.message) {
+                        frm.doc.table_8 = [];
+                        $.each(r.message, function(i, d) {
+                            var a;
+                            if (d.last_update_date) {
+                                a = frappe.datetime.add_days(d.last_update_date, 1)}
+                            else{ a = '1990-01-01'}
+                            var row = frappe.model.add_child(frm.doc, "Running Hours Child Actual", "table_8");
+                            row.equipment_name = d.item_code;
+                            row.from_date = a;
+                            row.running_hours_before_update = d.running_hours;
+                            row.last_updated_on = d.last_update_date;
+                        });
+                    }
+                    refresh_field("table_8");
 
-
-                frappe.model.add_child(cur_frm.doc, "Running Hours Entry Difference", "table_7");
-                $.each(frm.doc.table_7 || [], function(e, v) {
-                    frappe.model.set_value(v.doctype, v.name, "from_date", frappe.datetime.add_days(r.message[e].last_update_date, 1))
-                    frappe.model.set_value(v.doctype, v.name, "equipment_name", r.message[e].item_code)
-                    frappe.model.set_value(v.doctype, v.name, "running_hours_before_update", r.message[e].running_hours)
-                    frappe.model.set_value(v.doctype, v.name, "last_updated_on", r.message[e].last_update_date)
-                })
-                frm.refresh_field("table_7");
-
-
-
-
-                frappe.model.add_child(cur_frm.doc, "Running Hours Child Actual", "table_8");
-                $.each(frm.doc.table_8 || [], function(e, v) {
-                	frappe.model.set_value(v.doctype, v.name, "from_date", frappe.datetime.add_days(r.message[e].last_update_date, 1))
-                    frappe.model.set_value(v.doctype, v.name, "equipment_name", r.message[e].item_code)
-                    frappe.model.set_value(v.doctype, v.name, "running_hours_before_update", r.message[e].running_hours)
-                    frappe.model.set_value(v.doctype, v.name, "last_updated_on", r.message[e].last_update_date)
-                })
-                frm.refresh_field("table_8");
-
-
-            }
 
         }
     });
@@ -142,14 +148,16 @@ frappe.ui.form.on("Running Hours Entry", "type", function(frm) {
 
 frappe.ui.form.on("Running Hours Entry", "under", function(frm) {
 
+if (frm.doc.type == "Runing Hours(Only difference)") {
     for (var i = 0; i < frm.doc.table_7.length; i++) {
         cur_frm.get_field("table_7").grid.grid_rows[i].remove()
     }
-
+}
+else if (frm.doc.type == "Total Running Hours(Actual Current Reading)") {
     for (var i = 0; i < frm.doc.table_8.length; i++) {
         cur_frm.get_field("table_8").grid.grid_rows[i].remove()
     }
-
+}
     if (frm.doc.under) {
         frappe.call({
             method: "frappe.client.get_list",
@@ -164,32 +172,50 @@ frappe.ui.form.on("Running Hours Entry", "under", function(frm) {
             },
             callback: function(r) {
                 console.log(r.message)
-                for (var e = 0; e < r.message.length; e++) {
+                // for (var e = 0; e < r.message.length; e++) {
 
                     if (frm.doc.type == "Runing Hours(Only difference)") {
 
-                        frappe.model.add_child(cur_frm.doc, "Running Hours Entry Difference", "table_7");
-                        $.each(frm.doc.table_7 || [], function(e, v) {
-                            frappe.model.set_value(v.doctype, v.name, "equipment_name", r.message[e].item_code)
-                            frappe.model.set_value(v.doctype, v.name, "running_hours_before_update", r.message[e].running_hours)
-                            frappe.model.set_value(v.doctype, v.name, "last_updated_on", r.message[e].last_update_date)
-                        })
-                        frm.refresh_field("table_7");
+                    if (r.message) {
+                        frm.doc.table_7 = [];
+                        $.each(r.message, function(i, d) {
+                            var a = '';
+                            if (d.last_update_date) {
+                                a = frappe.datetime.add_days(d.last_update_date, 1)
+                                }
+                            else{ a = '1990-01-01'}
+                            var row = frappe.model.add_child(frm.doc, "Running Hours Entry Difference", "table_7");
+                            row.equipment_name = d.item_code;
+                            row.from_date = a;
+                            row.running_hours_before_update = d.running_hours;
+                            row.last_updated_on = d.last_update_date;
+                        });
+                    }
+                    refresh_field("table_7");
+
 
                     } else if (frm.doc.type == "Total Running Hours(Actual Current Reading)") {
 
 
-                        frappe.model.add_child(cur_frm.doc, "Running Hours Child Actual", "table_8");
-                        $.each(frm.doc.table_8 || [], function(e, v) {
-                            frappe.model.set_value(v.doctype, v.name, "equipment_name", r.message[e].item_code)
-                            frappe.model.set_value(v.doctype, v.name, "running_hours_before_update", r.message[e].running_hours)
-                            frappe.model.set_value(v.doctype, v.name, "last_updated_on", r.message[e].last_update_date)
-                        })
-                        frm.refresh_field("table_8");
+                    if (r.message) {
+                        frm.doc.table_8 = [];
+                        $.each(r.message, function(i, d) {
+                            var a;
+                            if (d.last_update_date) {
+                                a = frappe.datetime.add_days(d.last_update_date, 1)}
+                            else{ a = '1990-01-01'}
+                            var row = frappe.model.add_child(frm.doc, "Running Hours Child Actual", "table_8");
+                            row.equipment_name = d.item_code;
+                            row.from_date = a;
+                            row.running_hours_before_update = d.running_hours;
+                            row.last_updated_on = d.last_update_date;
+                        });
+                    }
+                    refresh_field("table_8");
 
                     }
 
-                }
+                // }
 
             }
         });
@@ -201,26 +227,63 @@ frappe.ui.form.on("Running Hours Entry", "under", function(frm) {
 frappe.ui.form.on("Running Hours Child Actual", "total_running_hours", function(frm, cdt, cdn) {
     var d = locals[cdt][cdn];
     var total = 0;
-    if (d.running_hours_before_update) {
-        frappe.model.set_value(cdt, cdn, "running_hours", parseInt(d.total_running_hours) - parseInt(d.running_hours_before_update));
-    } else {
-        frappe.model.set_value(cdt, cdn, "running_hours", parseInt(d.total_running_hours) - 0);
-    }
+   if (d.to_date){ if (d.running_hours_before_update) {
+           frappe.model.set_value(cdt, cdn, "running_hours", parseInt(d.total_running_hours) - parseInt(d.running_hours_before_update));
+       } else {
+           frappe.model.set_value(cdt, cdn, "running_hours", parseInt(d.total_running_hours) - 0);
+       }}
+    else{
+        
+        frappe.model.set_value(cdt, cdn, "total_running_hours", null);
+        frappe.throw('Please Enter to-date before entering running hours')
+        
+    }   
 
 });
-
-
-
-
 
 
 frappe.ui.form.on("Running Hours Entry Difference", "running_hours", function(frm, cdt, cdn) {
     var d = locals[cdt][cdn];
     var total = 0;
-    if (d.running_hours_before_update) {
-        frappe.model.set_value(cdt, cdn, "total_running_hours", parseInt(d.running_hours_before_update) + parseInt(d.running_hours));
-    } else {
-        frappe.model.set_value(cdt, cdn, "total_running_hours", 0 + parseInt(d.running_hours));
+    if (d.to_date){if (d.running_hours_before_update) {
+            frappe.model.set_value(cdt, cdn, "total_running_hours", parseInt(d.running_hours_before_update) + parseInt(d.running_hours));
+        } else {
+            frappe.model.set_value(cdt, cdn, "total_running_hours", 0 + parseInt(d.running_hours));
+        }
     }
+    else{
+        frappe.model.set_value(cdt, cdn, "running_hours", null);
+        frappe.throw('Please Enter to-date before entering running hours')
+        
+    }   
 
 });
+
+
+frappe.ui.form.on("Running Hours Child Actual", "to_date", function(frm, cdt, cdn) {
+    var d = locals[cdt][cdn];
+   if (d.to_date){ 
+        if (d.to_date <= d.from_date ) {
+            frappe.model.set_value(cdt, cdn, "to_date", null);
+            frappe.throw('To date should be greater then from date')
+
+       }
+   }
+       
+
+});
+
+frappe.ui.form.on("Running Hours Entry Difference", "to_date", function(frm, cdt, cdn) {
+    var d = locals[cdt][cdn];
+    var d = locals[cdt][cdn];
+   if (d.to_date){ 
+        if (d.to_date <= d.from_date ) {
+            frappe.model.set_value(cdt, cdn, "to_date", null);
+            frappe.throw('To date should be greater then from date')
+       }
+   }
+       
+
+});
+
+

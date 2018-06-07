@@ -70,7 +70,7 @@ class Item(WebsiteGenerator):
 
 	def after_insert(self):
 		if self.is_fixed_asset == 1:	
-			new_doc = {'doctype': 'Asset', 'item_code': self.item_name, 'asset_name': self.item_name}
+			new_doc = {'doctype': 'Asset', 'item_code': self.item_name, 'asset_name': self.item_name, 'asset_category':self.type}
 			new_asset = frappe.get_doc(new_doc)
 			new_asset.insert()
 			new_asset.submit()

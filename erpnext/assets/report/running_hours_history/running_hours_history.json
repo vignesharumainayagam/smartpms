@@ -1,0 +1,24 @@
+{
+ "add_total_row": 0, 
+ "apply_user_permissions": 1, 
+ "creation": "2018-06-06 16:48:26.215279", 
+ "disabled": 0, 
+ "docstatus": 0, 
+ "doctype": "Report", 
+ "idx": 0, 
+ "is_standard": "Yes", 
+ "modified": "2018-06-07 12:11:16.721871", 
+ "modified_by": "Administrator", 
+ "module": "Assets", 
+ "name": "Running Hours History", 
+ "owner": "Administrator", 
+ "query": "select equipment_name as `Equipment Name::200`,\nrunning_hours as `Running Hours::100`,\ntotal_running_hours as `Total Running Hours::200`,\nfrom_date as `From Date::100`,\nto_date as `To Date::100`\nfrom `tabRunning Hours Log`\nwhere from_date<>'0000-00-00'", 
+ "ref_doctype": "Running Hours Log", 
+ "report_name": "Running Hours History", 
+ "report_type": "Script Report", 
+ "roles": [
+  {
+   "role": "System Manager"
+  }
+ ]
+}
