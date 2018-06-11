@@ -5,7 +5,7 @@
 frappe.query_reports["Maintenance History"] = {
 	"filters": [
 		{
-			"fieldname":"Item",
+			"fieldname":"item",
 			"label": __("Item"),
 			"fieldtype": "Link",
 			"options": "Item"
@@ -33,6 +33,13 @@ frappe.query_reports["Maintenance History"] = {
 			"label": __("Maintenance Type"),
 			"fieldtype": "Link",
 			"options": "Maintenance Type"
+		},
+		{
+			"fieldname":"reason_for_the_job",
+			"label": __("Reason For Job"),
+			"fieldtype": "Select",
+			"options": "\nPMS\nBreakdown\nDefect\nDrop in Performance"
 		}
+		
 	]
 }
