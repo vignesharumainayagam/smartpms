@@ -20,7 +20,7 @@ frappe.query_reports["Maintenance Due Report"] = {
 			"fieldname":"departmant",
 			"label": __("Departmant"),
 			"fieldtype": "Link",
-			"options": "Asset Maintenance Team"
+			"options": "Asset Maintenance Team",
 			"reqd": 0
 		},
 		{
