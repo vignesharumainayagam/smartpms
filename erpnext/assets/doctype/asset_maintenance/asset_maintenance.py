@@ -54,20 +54,20 @@ def assign_tasks(asset_maintenance_name, assign_to_member, maintenance_task, nex
 		assign_to.add(args)
 
 @frappe.whitelist()
-def calculate_next_due_date(periodicity, start_date = None, end_date = None, last_completion_date = None, next_due_date = None):
+def calculate_next_due_date(periodicity, start_date = None, end_date = None, last_completion_date = None, next_due_date = None, frequency = 1):
 	if not start_date and not last_completion_date:
 		start_date = frappe.utils.now()
 
 	if last_completion_date and (last_completion_date > start_date or not start_date):
 		start_date = last_completion_date
 	if periodicity == 'Daily':
-		next_due_date = add_days(start_date, 1)
+		next_due_date = add_days(start_date, int(frequency))
 	if periodicity == 'Weekly':
-		next_due_date = add_days(start_date, 7)
+		next_due_date = add_days(start_date, 7*int(frequency))
 	if periodicity == 'Monthly':
-		next_due_date = add_months(start_date, 1)
+		next_due_date = add_months(start_date, int(frequency))
 	if periodicity == 'Yearly':
-		next_due_date = add_years(start_date, 1)
+		next_due_date = add_years(start_date, int(frequency))
 	if periodicity == '2 Yearly':
 		next_due_date = add_years(start_date, 2)
 	if periodicity == 'Quarterly':

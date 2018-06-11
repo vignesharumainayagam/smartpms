@@ -1,13 +1,15 @@
 // Copyright (c) 2017, Frappe Technologies Pvt. Ltd. and contributors
 // For license information, please see license.txt
+frappe.provide("erpnext.assets");
 
 frappe.ui.form.on('Asset Maintenance', {
 	setup: (frm) => {
-		frm.set_query("assign_to", "asset_maintenance_tasks", function(doc) {
+		frm.set_query("assign_to", "asset_maintenance_tasks", function(frm, cdt, cdn) {
+			child = locals[cdt][cdn];
 			return {
 				query: "erpnext.assets.doctype.asset_maintenance.asset_maintenance.get_team_members",
 				filters: {
-					maintenance_team: doc.maintenance_team
+					maintenance_team: child.maintenance_team
 				}
 			};
 		});
@@ -29,6 +31,8 @@ frappe.ui.form.on('Asset Maintenance', {
 		if(!frm.is_new()) {
 			frm.trigger('make_dashboard');
 		}
+
+
 	},
 	make_dashboard: (frm) => {
 		if(!frm.is_new()) {
@@ -60,6 +64,7 @@ frappe.ui.form.on('Asset Maintenance', {
 	}
 });
 
+
 frappe.ui.form.on('Asset Maintenance Task', {
 	start_date: (frm, cdt, cdn)  => {
 		get_next_due_date(frm, cdt, cdn);
@@ -67,11 +72,17 @@ frappe.ui.form.on('Asset Maintenance Task', {
 	periodicity: (frm, cdt, cdn)  => {
 		get_next_due_date(frm, cdt, cdn);
 	},
+	frequency: (frm, cdt, cdn)  => {
+		get_next_due_date(frm, cdt, cdn);
+	},
 	last_completion_date: (frm, cdt, cdn)  => {
 		get_next_due_date(frm, cdt, cdn);
 	},
 	end_date: (frm, cdt, cdn)  => {
 		get_next_due_date(frm, cdt, cdn);
+	},
+	refresh: (frm, cdt, cdn) => {
+		var d = locals[cdt][cdn];
 	},
 	assign_to: (frm, cdt, cdn)  => {
 		var d = locals[cdt][cdn];
@@ -94,29 +105,65 @@ frappe.ui.form.on('Asset Maintenance Task', {
 	}
 });
 
+
+
 var get_next_due_date = function (frm, cdt, cdn) {
 	var d = locals[cdt][cdn];
 	if (d.start_date && d.periodicity) {
-		return frappe.call({
-			method: 'erpnext.assets.doctype.asset_maintenance.asset_maintenance.calculate_next_due_date',
-			args: {
-				start_date: d.start_date,
-				periodicity: d.periodicity,
-				end_date: d.end_date,
-				last_completion_date: d.last_completion_date,
-				next_due_date: d.next_due_date
-			},
-			callback: function(r) {
-				if (r.message) {
-					frappe.model.set_value(cdt, cdn, "next_due_date", r.message);
+
+		if (d.periodicity == 'Hourly') {
+			// alert('');
+			calculate_end_time(frm, cdt, cdn)
+		}
+		else{	
+			return frappe.call({
+				method: 'erpnext.assets.doctype.asset_maintenance.asset_maintenance.calculate_next_due_date',
+				args: {
+					start_date: d.start_date,
+					periodicity: d.periodicity,
+					end_date: d.end_date,
+					last_completion_date: d.last_completion_date,
+					next_due_date: d.next_due_date,
+					frequency: d.frequency,
+				},
+				callback: function(r) {
+					if (r.message) {
+						console.log(r.message)
+						frappe.model.set_value(cdt, cdn, "next_due_date", r.message);
+					}
+					else {
+						frappe.model.set_value(cdt, cdn, "next_due_date", "");
+					}
 				}
-				else {
-					frappe.model.set_value(cdt, cdn, "next_due_date", "");
-				}
-			}
-		});
+			});
+		}
 	}
 };
+
+
+var calculate_end_time = function(frm, cdt, cdn) {
+	let child = locals[cdt][cdn];
+
+	if(!child.start_date) {
+		// if from_time value is not available then set the current datetime
+		frappe.model.set_value(cdt, cdn, "start_date", frappe.datetime.get_datetime_as_string());
+	}
+
+	let d = moment(child.start_date);
+	if(child.frequency) {
+		d.add(child.frequency, "hours");
+		frm._setting_hours = true;
+		frappe.model.set_value(cdt, cdn, "next_due_date",
+			d.format(moment.defaultDatetimeFormat)).then(() => {
+				frm._setting_hours = false;
+			});
+	}
+
+
+	if((frm.doc.__islocal || frm.doc.__onload.maintain_bill_work_hours_same) && child.hours){
+		frappe.model.set_value(cdt, cdn, "billing_hours", child.hours);
+	}
+}
 
 frappe.ui.form.on("Asset Maintenance", "type", function (frm) {
 if(frm.doc.type == "Sub functional"){sub_fun(frm)}
@@ -284,3 +331,4 @@ frm.add_custom_button(__('Select from Tree View'), function() {
 				});	
 });
 });
+

@@ -8,6 +8,12 @@ frappe.listview_settings['Asset Repair'] = {
 		} else if(doc.repair_status=="Cancelled") {
 			return [__("Cancelled"), "red"];
 		}
+	},
+	onload: function (doclist) {
+		// $(".btn-primary").hide();	
+	exec_treefilter('item','asset_name');
+	
 	}
+
 };
 

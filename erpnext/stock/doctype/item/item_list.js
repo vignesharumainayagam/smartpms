@@ -17,12 +17,42 @@ frappe.listview_settings['Item'] = {
 		}
 	},
 	enable_tree:true,
-	onload: function () {
+	onload: function (doclist) {
 		// $(".btn-primary").hide();	
-	exec_treefilter();
+	exec_treefilter('item','parent_item');
+	console.log(doclist.page)
+
+	
 
 
-	},	
+	},
+	set_primary_action:function(doclist){
+
+	doclist.page.set_primary_action(__("Help"), function() {
+					var d = new frappe.ui.Dialog({
+					title: __('Help Tutorial: '),
+					width: 800
+					});
+	var	FlyerPath = 'EymUNHbynew';			
+	$(d.body).html('<iframe src="https://www.youtube.com/embed/' + FlyerPath + '?rel=0"></iframe>');
+					d.show();
+
+	}, "octicon octicon-plus");
+
+		// doclist.page.clear_primary_action();
+		// doclist.page.set_secondary_action(__("Neadsdw"), function() {
+	
+		// 	frappe.ui.get_upload_dialog({
+		// 		"args": {
+		// 			"folder": doclist.current_folder,
+		// 			"from_form": 1
+		// 		},
+		// 		callback: function() {
+		// 			doclist.refresh();
+		// 		}
+		// 	});
+		// }, "octicon octicon-plus");
+	},		
 	refresh: function () {
 		// $(".btn-primary").hide();	
 

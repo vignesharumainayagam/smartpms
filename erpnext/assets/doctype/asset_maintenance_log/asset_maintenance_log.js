@@ -13,8 +13,23 @@ frappe.ui.form.on('Asset Maintenance Log', {
 		});
 	},
 	completion_date: (frm) => {
-		if (frm.doc.completion_date > frappe.datetime.get_today) {
+		var a = String(frm.doc.completion_date)
+		if (a == frappe.datetime.get_today) {
 			alert('please select a valid date.');
 		}
-	}
+		check_wether_running_hours_based(frm);
+	},
+
 });
+
+function check_wether_running_hours_based(frm) {
+	// frappe.call({
+	// 	method: 'frappe.client.get_value',
+	// 	args: {
+	// 		doctype: "Company",
+	// 		filters: {"name": frm.doc.company},
+	// 		fieldname: "cost_center" 
+	// 	},
+
+	// });
+};

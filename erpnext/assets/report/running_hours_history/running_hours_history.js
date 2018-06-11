@@ -5,7 +5,7 @@
 frappe.query_reports["Running Hours History"] = {
 	"filters": [
 		{
-			"fieldname":"Item",
+			"fieldname":"item",
 			"label": __("Item"),
 			"fieldtype": "Link",
 			"options": "Item"
@@ -14,21 +14,21 @@ frappe.query_reports["Running Hours History"] = {
 			"fieldname":"from_date",
 			"label": __("From Date"),
 			"fieldtype": "Date",
-			"reqd": 0
+			"reqd": 1
 		},
 		{
 			"fieldname":"to_date",
 			"label": __("To Date"),
 			"fieldtype": "Date",
-			"reqd": 0
+			"reqd": 1
 		}
 	],
-	"onload": function() {
-	    return  frappe.call({
-			method: "erpnext.assets.report.running_hours_history.running_hours_history.get_runninhrsbased_items",
-			callback: function(r) {
-				console.log(r);
-			}
-		});
-	}
+	// "onload": function() {
+	//     return  frappe.call({
+	// 		method: "erpnext.assets.report.running_hours_history.get_runninhrsbased_items",
+	// 		callback: function(r) {
+	// 			console.log(r);
+	// 		}
+	// 	});
+	// }
 }

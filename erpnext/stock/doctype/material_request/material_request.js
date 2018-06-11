@@ -5,8 +5,9 @@
 
 frappe.ui.form.on('Material Request', {
 	setup: function(frm) {
+
+
 		var forms=cur_frm.doc.functional_block
-    console.log(forms)
 		frm.custom_make_buttons = {
 			'Stock Entry': 'Issue Material',
 			'Purchase Order': 'Purchase Order',
@@ -14,8 +15,17 @@ frappe.ui.form.on('Material Request', {
 			'Supplier Quotation': 'Supplier Quotation',
 			'Production Order': 'Production Order'
 		}
-	},
+		frm.set_query("item_code", "items", function(doc) {
+			// child = locals[cdt][cdn];
+			return {
+				query: "erpnext.assets.doctype.material_request.material_request.get_spares",
+				filters: {
+					type: 'Spare'
+				}
+			};
+		});
 
+	},
 	onload: function(frm) {
 		// add item, if previous view was item
 		erpnext.utils.add_item(frm);

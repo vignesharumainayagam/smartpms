@@ -505,4 +505,12 @@ def get_subequipment_block(doctype, txt, searchfield, filters, start=0, page_len
 					"txt": "%{0}%".format(txt),
 					"_txt": txt.replace('%', ''),					
 				})
-	
+
+@frappe.whitelist()
+def get_spares(doctype, txt, searchfield, start, page_len, filters):
+	return frappe.db.get_values('Item', {'type':filters.get("type")})
+
+
+
+
+

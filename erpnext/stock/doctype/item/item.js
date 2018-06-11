@@ -13,6 +13,8 @@ frappe.ui.form.on("Item", {
 		frm.add_fetch('attribute', 'to_range', 'to_range');
 		frm.add_fetch('attribute', 'increment', 'increment');
 		frm.add_fetch('tax_type', 'tax_rate', 'tax_rate');
+	
+
 	},
 	onload: function(frm) {
 		erpnext.item.setup_queries(frm);
@@ -22,6 +24,7 @@ frappe.ui.form.on("Item", {
 			// should never check Private
 		frm.fields_dict["website_image"].df.is_private = 0;
 		$(".btn-primary").show();	
+
 
 	},
 
@@ -56,7 +59,6 @@ frappe.ui.form.on("Item", {
 		}
 			
 
-
 		{
 			frappe.call({
 					method:"erpnext.controllers.item_variant.for_table",
@@ -64,7 +66,7 @@ frappe.ui.form.on("Item", {
 						'parent': parent,
 					},
 					callback: function (r) {
-						if (r) {
+						if (r.message) {
 						var array1 = [];	
 						for (var i = 0;  i < r.message.length; i++) {
 								console.log(r[i])
@@ -72,8 +74,8 @@ frappe.ui.form.on("Item", {
 								array2.push(r.message[i][0]);
 								array1.push(array2);
 							}	
-						console.log(array1)	
-						$("div[data-fieldname=html_173]").html('<h1>dasdas</h1>');
+						
+						
 						var grid = new DataTable(document.querySelector('[data-fieldname=html_173]'), 
 						{
 						  	data: {
@@ -781,6 +783,7 @@ if(frm.doc.__islocal)
 
 frappe.ui.form.on("Item", "onload", function(frm){
 
+ exec_treefilter('details',frm.doc.name);
 // if (frm.doc.type == "Functional") {
 
 
