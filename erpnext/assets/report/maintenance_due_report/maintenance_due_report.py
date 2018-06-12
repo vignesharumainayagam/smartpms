@@ -25,7 +25,7 @@ def execute(filters=None):
 		row.append(due_report.periodicity)
 		row.append(due_report.last_completion_date)
 		row.append(due_report.next_due_date)
-		row.append(due_report.next_due_date)
+		row.append(due_report.position_in_vessel)
 		row.append(due_report.class_code)
 		row.append(due_report.maintenance_type)
 		row.append(due_report.assign_to)
@@ -54,7 +54,7 @@ def get_conditions(filters):
 	conditions = ""
 	if filters.get("item"): conditions += " and M.asset_name=%(item)s"
 	if filters.get("departmant"): conditions += " and T.maintenance_team=%(departmant)s"
-	if filters.get("from_date"): conditions += " and T.next_due_date >= %(entry_to_date)s"
+	if filters.get("from_date"): conditions += " and T.next_due_date >= %(from_date)s"
 	if filters.get("classcode"): conditions += " and T.classcode=%(classcode)s"
 	if filters.get("maintenance_type"): conditions += " and T.maintenance_type=%(maintenance_type)s"
 
@@ -62,9 +62,10 @@ def get_conditions(filters):
 
 def get_due_report_list(conditions, filters):
 	due_report_list = frappe.db.sql("""select  
-			T.*,M.asset_name
+			T.*,M.asset_name,I.position_in_vessel
 			from `tabAsset Maintenance Task` T
 			inner join `tabAsset Maintenance` M on M.name=T.parent
+			inner join `tabItem` I on I.item_code=M.item_code
 			where  T.name <> '' %s """ %
 		conditions, filters, as_dict=1)
 	return due_report_list

@@ -12,7 +12,7 @@ frappe.query_reports["Maintenance Due Report"] = {
 		},
 		{
 			"fieldname":"from_date",
-			"label": __("From Date"),
+			"label": __("As On Date"),
 			"fieldtype": "Date",
 			"reqd": 0
 		},

@@ -119,7 +119,47 @@ def get_data():
 				},
 			]
 		},
-
+		{
+			"label": _("Reports"),
+			"items": [
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Maintenance Due Report",
+					"doctype": "Asset Maintenance Task"
+				},
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Requisition Report",
+					"doctype": "Material Request"
+				},				
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "DefectList Report",
+					"doctype": "Asset Repair"
+				},
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Maintenance History",
+					"doctype": "Asset Maintenance Log"
+				},
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Running Hours History",
+					"doctype": "Running Hours Log"
+				},
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Inspection Entry Report",
+					"doctype": "Inspection Report"
+				},
+			]
+		},
 	]
 
 
