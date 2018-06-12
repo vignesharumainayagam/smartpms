@@ -38,7 +38,6 @@ class Item(WebsiteGenerator):
 
 	def onload(self):
 		data = frappe.db.get_list('Item', fields=['item_code', 'type', 'name'], order_by="type asc")
-		print(data)
 		return data
 			
 	def autoname(self):

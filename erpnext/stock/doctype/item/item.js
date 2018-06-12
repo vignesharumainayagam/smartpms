@@ -2,7 +2,11 @@
 // License: GNU General Public License v3. See license.txt
 
 
-
+$(document).ready(function(){
+	$(".tree-node").click(function(){
+    	alert("The paragraph was clicked.");
+	});
+});
 
 frappe.provide("erpnext.item");
 
@@ -28,10 +32,6 @@ frappe.ui.form.on("Item", {
 
 	},
 
-	type: function(frm){
-	
-
-	},
 
 	onload: function (frm) {
 
@@ -76,19 +76,19 @@ frappe.ui.form.on("Item", {
 							}	
 						
 						
-						var grid = new DataTable(document.querySelector('[data-fieldname=html_173]'), 
-						{
-						  	data: {
+						// var grid = new DataTable(document.querySelector('[data-fieldname=html_173]'), 
+						// {
+						//   	data: {
 								  
-								    columns: [ {name: doctype, content: doctype, width: 600}],
-								    rows: array1,
+						// 		    columns: [ {name: doctype, content: doctype, width: 600}],
+						// 		    rows: array1,
 								  
-								  },
-								  setCellHeight: 500,
-								  addSerialNoColumn: true,
+						// 		  },
+						// 		  setCellHeight: 500,
+						// 		  addSerialNoColumn: true,
 						    	  
 								  
-						});
+						// });
 		
 		
 						}
@@ -99,6 +99,8 @@ frappe.ui.form.on("Item", {
 	},
 
 	refresh: function(frm) {
+		exec_treefilter('details', frm.doc)
+
 		if(frm.doc.is_stock_item) {
 			frm.add_custom_button(__("Balance"), function() {
 				frappe.route_options = {
@@ -783,7 +785,6 @@ if(frm.doc.__islocal)
 
 frappe.ui.form.on("Item", "onload", function(frm){
 
- exec_treefilter('details',frm.doc.name);
 // if (frm.doc.type == "Functional") {
 
 
