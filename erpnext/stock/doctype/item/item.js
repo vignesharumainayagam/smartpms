@@ -21,6 +21,7 @@ frappe.ui.form.on("Item", {
 
 	},
 	onload: function(frm) {
+		exec_treefilter('details', frm.doc)
 		erpnext.item.setup_queries(frm);
 		if (frm.doc.variant_of){
 			frm.fields_dict["attributes"].grid.set_column_disp("attribute_value", true);
@@ -99,7 +100,7 @@ frappe.ui.form.on("Item", {
 	},
 
 	refresh: function(frm) {
-		exec_treefilter('details', frm.doc)
+		
 
 		if(frm.doc.is_stock_item) {
 			frm.add_custom_button(__("Balance"), function() {
