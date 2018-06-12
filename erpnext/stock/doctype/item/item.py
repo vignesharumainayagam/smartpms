@@ -922,4 +922,45 @@ def add_multiple_tasks(data, parent, is_group, element_type, item_group, is_stoc
 		# new_asset = frappe.get_doc(new_docc)
 		# new_asset.insert()
 		# new_asset.submit()
-		
+
+@frappe.whitelist()
+def get_dashboard_data(type, item):
+	if type == 'Functional':
+		data = frappe.db.get_list('Item', fields=['item_code', 'name'],
+		filters={'type': 'Sub functional', 'parent_item': item}, order_by="type asc")
+		number_of_next_level = len(data)
+
+		data1 = frappe.db.get_list('Item', fields=['item_code', 'name'],
+		filters={'type': 'Spare', 'functional_block': item}, order_by="type asc")
+		number_of_spares = len(data1)
+
+
+		data21 = frappe.db.get_list('Asset Maintenance', fields=['name'],
+		filters={'asset_name': item})
+
+		data22 = frappe.db.get_list('Asset Maintenance Tasks', fields=['maintenance_task', 'name'],
+		filters={"parent": ["in", data21]}, order_by="type asc")
+		maintenance_overdue_for_current_day = data22
+
+	if type == 'Sub functional':
+		pass	
+	if type == 'Equipment':
+		pass
+	if type == 'Sub Equipment':
+		pass
+	if type == 'Spare Group':
+		pass
+
+
+
+
+
+
+
+
+
+
+
+
+
+

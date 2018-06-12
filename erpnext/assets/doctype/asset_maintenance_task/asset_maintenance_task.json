@@ -70,7 +70,7 @@
    "read_only": 0, 
    "remember_last_selected_value": 0, 
    "report_hide": 0, 
-   "reqd": 1, 
+   "reqd": 0, 
    "search_index": 0, 
    "set_only_once": 0, 
    "unique": 1
@@ -1018,7 +1018,7 @@
  "issingle": 0, 
  "istable": 1, 
  "max_attachments": 0, 
- "modified": "2018-06-08 14:39:08.275597", 
+ "modified": "2018-06-12 13:33:56.600675", 
  "modified_by": "Administrator", 
  "module": "Assets", 
  "name": "Asset Maintenance Task", 

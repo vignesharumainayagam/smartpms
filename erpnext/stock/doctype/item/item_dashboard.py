@@ -1,5 +1,18 @@
 # from frappe import _
-
+def get_data():
+	return {
+		'fieldname': 'item_code',
+		'transactions': [
+			{
+				'label': ['Maintenance'],
+				'items': ['Asset Maintenance', 'Asset Maintenance Log']
+			},
+			{
+				'label': ['Repair'],
+				'items': ['Asset Repair']
+			},
+		]
+	}
 # def get_data():
 # 	return {
 # 		'heatmap': True,

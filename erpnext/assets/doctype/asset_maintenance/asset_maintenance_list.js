@@ -4,7 +4,12 @@ frappe.listview_settings['Asset Maintenance'] = {
 		// $(".btn-primary").hide();	
 	exec_treefilter('item','asset_name');
 	
+	
+
 	}
 
 };
+$(document).ready(function(){
+// alert('');
 
+});

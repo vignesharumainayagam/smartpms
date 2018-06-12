@@ -69,7 +69,7 @@ frappe.ui.form.on("Running Hours Entry", "select_in_tree_view", function(frm) {
 
 frappe.ui.form.on("Running Hours Entry", "onload", function(frm) {
 
-
+    
     frm.refresh_field("under");
     frm.set_value("under", null)
 

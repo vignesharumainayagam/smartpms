@@ -2,11 +2,11 @@
 // License: GNU General Public License v3. See license.txt
 
 
-$(document).ready(function(){
-	$(".tree-node").click(function(){
-    	alert("The paragraph was clicked.");
-	});
-});
+// $(document).ready(function(){
+// 	$("#menu123").click(function(){
+//     	alert("The paragraph was clicked.");
+// 	});
+// });
 
 frappe.provide("erpnext.item");
 
@@ -783,7 +783,7 @@ if(frm.doc.__islocal)
 });
 
 
-frappe.ui.form.on("Item", "onload", function(frm){
+// frappe.ui.form.on("Item", "onload", function(frm){
 
 // if (frm.doc.type == "Functional") {
 
@@ -843,7 +843,7 @@ frappe.ui.form.on("Item", "onload", function(frm){
 
 // }
 
-/////////////////////////////////////////////////////////////////////////////////////// 
+// ///////////////////////////////////////////////////////////////////////////////////// 
 
 // if (frm.doc.type == "Sub functional") {
 // frappe.call({
@@ -1000,7 +1000,7 @@ frappe.ui.form.on("Item", "onload", function(frm){
 
 // }
 
-});
+// });
 
 
 

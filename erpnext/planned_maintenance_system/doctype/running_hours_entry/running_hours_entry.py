@@ -45,3 +45,4 @@ class RunningHoursEntry(Document):
 def delete_child_table_items():
 	frappe.db.sql("""Delete from `tabRunning Hours Entry Difference`""")
 	frappe.db.sql("""Delete from `tabRunning Hours Child Actual`""")
+
