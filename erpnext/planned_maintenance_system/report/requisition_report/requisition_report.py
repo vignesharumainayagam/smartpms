@@ -18,19 +18,7 @@ def execute(filters=None):
 			select
 				a.name, a.material_request_type, a.schedule_date, a.status, b.item_code, b.qty
 			from
-				`tabMaterial Request` a, `tabMaterial Request Item` b, 'tabItem' c
+				`tabMaterial Request` a, `tabMaterial Request Item` b
 			where
-				a.name = b.parent and b.item_name = c.type""")
+				a.name = b.parent""")
 	return columns, data
-
-
-# def get_conditions(filters):
-# 	conditions = ""
-# 	if filters.get("functional_block"): conditions += " and type=%(functional_block)s"
-# 	if filters.get("subfunctional_block"): conditions += " and type = %(subfunctional_block)s"
-# 	if filters.get("equipment_block"): conditions += " and type>=%(equipment_block)s"
-# 	if filters.get("subequipment_block"): conditions += " and type = %(subequipment_block)s"
-# 	if filters.get("from_date"): conditions += " and target_date>=%(from_date)s"
-# 	if filters.get("to_date"): conditions += " and repair_status=%(to_date)s"
-
-# 	return conditions
