@@ -120,23 +120,19 @@ def get_data():
 			]
 		},
 		{
-			"label": _("Certificate Status"),
+			"label": _("Certificate & Survey Status"),
 			"items": [
 				{
 					"type": "doctype",
 					"name": "Certificate Status",
 				},
-			]
-		},
-		{
-			"label": _("Survey Status"),
-			"items": [
 				{
 					"type": "doctype",
 					"name": "Survey Status",
 				},
 			]
 		},
+	
 		{
 			"label": _("Reports"),
 			"items": [
