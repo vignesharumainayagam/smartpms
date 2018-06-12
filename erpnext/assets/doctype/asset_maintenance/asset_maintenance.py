@@ -18,11 +18,11 @@ class AssetMaintenance(Document):
 				task.maintenance_status = "Overdue"
 
 	def on_update(self):
-		for task in self.get('asset_maintenance_tasks'):
-			if not task.assign_to:
-				task.db_set("assign_to", self.maintenance_manager)
-				task.db_set("assign_to_name", self.maintenance_manager_name)
-			assign_tasks(self.name, task.assign_to, task.maintenance_task, task.next_due_date)
+		# for task in self.get('asset_maintenance_tasks'):
+		# 	if not task.assign_to:
+		# 		task.db_set("assign_to", self.maintenance_manager)
+		# 		task.db_set("assign_to_name", self.maintenance_manager_name)
+		# 	assign_tasks(self.name, task.assign_to, task.maintenance_task, task.next_due_date)
 		self.sync_maintenance_tasks()
 
 	def sync_maintenance_tasks(self):
@@ -78,7 +78,8 @@ def calculate_next_due_date(periodicity, start_date = None, end_date = None, las
 
 def update_maintenance_log(asset_maintenance, item_code, item_name, task):
 	asset_maintenance_log = frappe.get_value("Asset Maintenance Log", {"asset_maintenance": asset_maintenance,
-		"task": task.maintenance_task, "maintenance_status": ('in',['Planned','Overdue'])})
+		"task": task.name, "maintenance_status": ('in',['Planned','Overdue'])})
+
 
 	if not asset_maintenance_log:
 		asset_maintenance_log = frappe.get_doc({
@@ -87,12 +88,13 @@ def update_maintenance_log(asset_maintenance, item_code, item_name, task):
 			"asset_name": asset_maintenance,
 			"item_code": item_code,
 			"item_name": item_name,
-			"task": task.maintenance_task,
+			"task": task.name,
 			"has_certificate": task.certificate_required,
 			"description": task.description,
 			"assign_to_name": task.assign_to_name,
 			"periodicity": str(task.periodicity),
 			"maintenance_type": task.maintenance_type,
+			"maintenance_task": task.maintenance_task,
 			"due_date": task.next_due_date
 		})
 		asset_maintenance_log.insert()
@@ -103,6 +105,7 @@ def update_maintenance_log(asset_maintenance, item_code, item_name, task):
 		maintenance_log.description = task.description
 		maintenance_log.periodicity = str(task.periodicity)
 		maintenance_log.maintenance_type = task.maintenance_type
+		maintenance_log.maintenance_task = task.maintenance_task
 		maintenance_log.due_date = task.next_due_date
 		maintenance_log.save()
 
