@@ -10,5 +10,12 @@ frappe.listview_settings['Asset Maintenance Log'] = {
 		} else if(doc.maintenance_status=="Overdue") {
 			return [__("Overdue"), "red"];
 		}
+	},
+	onload: function (doclist) {
+		// $(".btn-primary").hide();	
+	exec_treefilter('item','asset_name');
+	
+	
+
 	}
 };
