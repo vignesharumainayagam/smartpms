@@ -2,7 +2,16 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Questions', {
-	refresh: function(frm) {
+    refresh: function(frm) {
 
-	}
+    }
+    // onload: function(frm) {
+    //     frm.set_query("chapter_name", function() {
+    //         return {
+    //             filters: {
+    //                 'subject_name': frm.doc.subject_name,
+    //             }
+    //         }
+    //     });
+    // }
 });
