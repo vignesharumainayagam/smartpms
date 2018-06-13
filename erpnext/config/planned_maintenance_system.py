@@ -9,8 +9,9 @@ def get_data():
 				{
 
 					"type": "doctype",
-					"label":_("Functional Block"),
+					"label":_("Equipments"),
 					"name": "Item",
+				
 				},
 				# {
 				# 	"type": "doctype",

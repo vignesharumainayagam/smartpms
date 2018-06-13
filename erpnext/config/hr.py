@@ -4,17 +4,18 @@ from frappe import _
 def get_data():
 	return [
 		{
-			"label": _("Employee and Attendance"),
+			"label": _("Crew and Attendance"),
 			"items": [
 				{
 					"type": "doctype",
 					"name": "Employee",
+					"label": _("Crew"),
 					"description": _("Employee records."),
 				},
 				{
 					"type": "doctype",
 					"name": "Employee Attendance Tool",
-					"label": _("Employee Attendance Tool"),
+					"label": _("Crew Attendance Tool"),
 					"description":_("Mark Attendance for multiple employees"),
 					"hide_count": True
 				},

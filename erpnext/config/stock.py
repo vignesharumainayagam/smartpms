@@ -70,6 +70,7 @@ def get_data():
 				{
 					"type": "doctype",
 					"name": "Item",
+					"label":_("Functional Block"),
 				},
 				{
 					"type": "doctype",
