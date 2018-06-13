@@ -4,10 +4,12 @@ from frappe import _
 def get_data():
 	return [
 		{
-			"label": _("Item"),
+			"label": _("Equipments"),
 			"items": [
 				{
+
 					"type": "doctype",
+					"label":_("Functional Block"),
 					"name": "Item",
 				},
 				# {
