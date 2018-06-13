@@ -125,11 +125,13 @@ def get_data():
 				{
 					"type": "doctype",
 					"name": "Employee Advance",
+					"label": _("Crew Advance"),
 					"description": _("Manage advance amount given to the Employee"),
 				},
 				{
 					"type": "doctype",
 					"name": "Expense Claim",
+					"label": _("Crew Claim"),
 					"description": _("Claims for company expense."),
 				},
 				{
@@ -160,7 +162,7 @@ def get_data():
 			]
 		},
 		{
-			"label": _("Employee Loan Management"),
+			"label": _("Crew Loan Management"),
 			"icon": "icon-list",
 			"items": [
 				{
@@ -171,10 +173,12 @@ def get_data():
 				{
 					"type": "doctype",
 					"name": "Employee Loan Application",
+					"label":_("Crew Loan Application"),
 					"description": _("Employee Loan Application")
 				},
 				{
 					"type": "doctype",
+					"label":_("Crew Loan"),
 					"name": "Employee Loan"
 				},
 			]
@@ -212,6 +216,7 @@ def get_data():
 				{
 					"type": "doctype",
 					"name": "Employment Type",
+					"label":_("Crew Type"),
 					"description": _("Types of employment (permanent, contract, intern etc.).")
 				},
 				{
@@ -243,23 +248,30 @@ def get_data():
 					"type": "report",
 					"is_query_report": True,
 					"name": "Employee Leave Balance",
+					"label":_("Crew Leave Balance"),
 					"doctype": "Leave Application"
 				},
 				{
 					"type": "report",
 					"is_query_report": True,
 					"name": "Employee Birthday",
+					"label":_("Crew Birthday"),
 					"doctype": "Employee"
 				},
 				{
 					"type": "report",
 					"is_query_report": True,
+					"label":_("Crew working on a holiday"),
+
 					"name": "Employees working on a holiday",
 					"doctype": "Employee"
+
 				},
 				{
 					"type": "report",
 					"name": "Employee Information",
+					"label":_("Crew Information"),
+
 					"doctype": "Employee"
 				},
 				{
@@ -274,12 +286,7 @@ def get_data():
 					"name": "Monthly Attendance Sheet",
 					"doctype": "Attendance"
 				},
-				{
-					"type": "report",
-					"is_query_report": True,
-					"name": "Vehicle Expenses",
-					"doctype": "Vehicle"
-				},
+				
 
 			]
 		}
