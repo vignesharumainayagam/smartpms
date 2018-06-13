@@ -19,11 +19,11 @@ frappe.ui.form.on('Asset Maintenance Log', {
 		}
 		check_wether_running_hours_based(frm);
 	},
-	onload: (frm) => {
+	validate: (frm) => {
 		// frm.set_value('checklist_completed', 'No');
-		// if(frm.doc.checklist_completed == 'No'){
+		if(frm.doc.checklist_completed == "No" && frm.doc.maintenance_status == "Completed" && frm.doc.completion_date){
 
-		frm.add_custom_button(__('Complete Checklist'), function () {
+		// frm.add_custom_button(__('Complete Checklist'), function () {
 
 		frappe.call({
 			method: 'frappe.client.get_value',
@@ -61,7 +61,11 @@ frappe.ui.form.on('Asset Maintenance Log', {
 						 					if (checkcount == rowCount) {
 						 						frm.set_value('checklist_completed', "Yes");
 						 						d.hide();
-						 						cur_frm.clear_custom_buttons();
+						 						cur_frm.savesubmit();
+						 						// frappe.call({
+						 						// 	method:'erpnext.assets.doctype.asset_maintenance_log.asset_maintenance_log.get_maintenance_tasks'
+						 						// })
+						 						// cur_frm.clear_custom_buttons();
 						 					}
 						 					else{
 						 						frm.set_value('checklist_completed', "No");
@@ -87,8 +91,8 @@ frappe.ui.form.on('Asset Maintenance Log', {
 		});
 
 
-	});
-	// }
+	// });
+	}
 },
 });
 

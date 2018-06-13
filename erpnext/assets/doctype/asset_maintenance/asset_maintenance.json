@@ -598,7 +598,7 @@
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
- "modified": "2018-06-12 15:30:42.850259", 
+ "modified": "2018-06-13 13:20:00.157973", 
  "modified_by": "Administrator", 
  "module": "Assets", 
  "name": "Asset Maintenance", 
@@ -652,6 +652,7 @@
  "show_name_in_global_search": 0, 
  "sort_field": "modified", 
  "sort_order": "DESC", 
+ "title_field": "asset_name", 
  "track_changes": 1, 
  "track_seen": 0
 }

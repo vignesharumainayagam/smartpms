@@ -18,15 +18,19 @@ class AssetMaintenanceLog(Document):
 		if self.maintenance_status == "Completed" and not self.completion_date:
 			frappe.throw(_("Please select Completion Date for Completed Asset Maintenance Log"))
 
-		if self.maintenance_status == "Completed" and self.completion_date and self.checklist_completed != "Yes":
-			frappe.throw(_("Please Complete the checklist"))
+		# if self.maintenance_status == "Completed" and self.completion_date and self.checklist_completed != "Yes":
+		# 	frappe.throw(_("Please Complete the checklist"))
 	
 
 		# if self.maintenance_status != "Completed" and self.completion_date:
 		# 	frappe.throw(_("Please select Maintenance Status as Completed or remove Completion Date"))
 
 	def on_submit(self):
-		if self.checklist_completed != "Yes" and self.maintenance_status not in ['Completed', 'Cancelled']:
+		if self.checklist_completed == "No":
+			# frappe.validated = false;
+			frappe.throw(_("Please Complete the checklist"))
+			# frappe.throw(_("Maintenance checklist is incomplete"))
+		if self.maintenance_status not in ['Completed', 'Cancelled']:
 			frappe.throw(_("Maintenance Status has to be Cancelled or Completed to Submit"))
 		self.update_maintenance_task()
 

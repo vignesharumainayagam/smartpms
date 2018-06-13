@@ -26,18 +26,18 @@ def get_data():
 					"name": "Payment Entry",
 					"description": _("Bank/Cash transactions against party or for internal transfer")
 				},
-				{
-					"type": "page",
-					"name": "pos",
-					"label": _("POS"),
-					"description": _("Point of Sale")
-				},
-				{
-					"type": "doctype",
-					"name": "Subscription",
-					"label": _("Subscription"),
-					"description": _("To make recurring documents")
-				},
+				# {
+				# 	"type": "page",
+				# 	"name": "pos",
+				# 	"label": _("POS"),
+				# 	"description": _("Point of Sale")
+				# },
+				# {
+				# 	"type": "doctype",
+				# 	"name": "Subscription",
+				# 	"label": _("Subscription"),
+				# 	"description": _("To make recurring documents")
+				# },
 				{
 					"type": "report",
 					"name": "Accounts Receivable",
@@ -307,17 +307,17 @@ def get_data():
 					"name": "Payment Gateway Account",
 					"description": _("Setup Gateway accounts.")
 				},
-				{
-					"type": "doctype",
-					"name": "POS Settings",
-					"description": _("Setup mode of POS (Online / Offline)")
-				},
-				{
-					"type": "doctype",
-					"name": "POS Profile",
-					"label": _("Point-of-Sale Profile"),
-					"description": _("Setup default values for POS Invoices")
-				},
+				# {
+				# 	"type": "doctype",
+				# 	"name": "POS Settings",
+				# 	"description": _("Setup mode of POS (Online / Offline)")
+				# },
+				# {
+				# 	"type": "doctype",
+				# 	"name": "POS Profile",
+				# 	"label": _("Point-of-Sale Profile"),
+				# 	"description": _("Setup default values for POS Invoices")
+				# },
 				{
 					"type": "doctype",
 					"name":"Terms and Conditions",
@@ -453,27 +453,6 @@ def get_data():
 					"is_query_report": True,
 					"name": "Sales Payment Summary",
 					"doctype": "Sales Invoice"
-				}
-			]
-		},
-		{
-			"label": _("Help"),
-			"icon": "fa fa-facetime-video",
-			"items": [
-				{
-					"type": "help",
-					"label": _("Chart of Accounts"),
-					"youtube_id": "DyR-DST-PyA"
-				},
-				{
-					"type": "help",
-					"label": _("Opening Accounting Balance"),
-					"youtube_id": "kdgM20Q-q68"
-				},
-				{
-					"type": "help",
-					"label": _("Setting up Taxes"),
-					"youtube_id": "nQ1zZdPgdaQ"
 				}
 			]
 		}
