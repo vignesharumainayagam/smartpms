@@ -1,5 +1,67 @@
 <div class="row layout-main">
-   <div class="col-md-12 layout-main-section-wrapper">
+  <div class="col-md-2 layout-side-section">
+    <div class="list-sidebar overlay-sidebar hidden-xs hidden-sm">
+        <ul class="list-unstyled sidebar-menu user-actions hide">
+            <li class="divider"></li>
+        </ul>
+        <ul class="list-unstyled sidebar-menu standard-actions">
+            <li class="divider"></li>
+            <li>
+                <div class="btn-group"> <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">        Reports <span class="caret"></span>      </a>
+                    <ul class="dropdown-menu reports-dropdown" style="max-height: 300px; overflow-y: auto;">
+                        <li><a href="#Report/Sales Invoice">Report Builder</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#query-report/Accounts Receivable">Accounts Receivable</a></li>
+                        <li><a href="#query-report/Accounts Receivable Summary">Accounts Receivable Summary</a></li>
+                        <li><a href="#query-report/Delivered Items To Be Billed">Delivered Items To Be Billed</a></li>
+                        <li><a href="#query-report/GST Itemised Sales Register">GST Itemised Sales Register</a></li>
+                        <li><a href="#query-report/GST Sales Register">GST Sales Register</a></li>
+                        <li><a href="#query-report/Gross Profit">Gross Profit</a></li>
+                        <li><a href="#query-report/Item-wise Sales Register">Item-wise Sales Register</a></li>
+                        <li><a href="#query-report/Ordered Items To Be Billed">Ordered Items To Be Billed</a></li>
+                        <li><a href="#query-report/Sales Invoice Trends">Sales Invoice Trends</a></li>
+                        <li><a href="#query-report/Sales Partners Commission">Sales Partners Commission</a></li>
+                        <li><a href="#query-report/Sales Payment Summary">Sales Payment Summary</a></li>
+                        <li><a href="#query-report/Sales Register">Sales Register</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="divider"></li>
+            <li class="list-link" data-view="List"> <a href="#List/Sales Invoice/List" disabled="disabled" class="disabled">List</a></li>
+            <li class="hide list-link" data-view="Image"> <a href="#List/Sales Invoice/Image">Images</a></li>
+            <li class="hide list-link" data-view="Gantt"> <a href="#List/Sales Invoice/Gantt">Gantt</a></li>
+            <li class="hide tree-link"> <a href="#Tree/Sales Invoice">Tree</a></li>
+            <li class="hide list-link" data-view="Calendar"> <a href="#List/Sales Invoice/Calendar">Calendar</a></li>
+            <li class="list-link" data-view="Kanban">
+                <div class="btn-group"> <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">     Kanban <span class="caret"></span>    </a>
+                    <ul class="dropdown-menu kanban-dropdown" style="max-height: 300px; overflow-y: auto;">
+                        <li class="new-kanban-board"><a>New Kanban Board</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="hide list-link" data-view="Inbox">
+                <div class="btn-group"> <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">     Email Inbox <span class="caret"></span>    </a>
+                    <ul class="dropdown-menu email-account-dropdown" style="max-height: 300px; overflow-y: auto;"> </ul>
+                </div>
+            </li>
+            <li class="assigned-to-me"> <a>Assigned To Me</a> </li>
+        </ul>
+        <ul class="list-unstyled sidebar-menu sidebar-stat">
+            <li class="divider"></li>
+            <li class="h6 stat-label">Tags</li>
+            <li>
+                <a class="stat-link badge-hover" data-label="No Tags" data-field="_user_tags"> <span class="badge">0</span> <span>No Tags</span> </a>
+            </li>
+        </ul>
+        <!-- <div style="margin-top: -10px;"> <a class="list-tag-preview hidden-xs text-muted">Show tags</a> </div> -->
+        <ul class="list-unstyled close-sidebar-button visible-xs visible-sm">
+            <li class="divider"></li>
+            <li class="close-sidebar">Close</li>
+        </ul>
+    </div>
+</div>
+
+   <div class="col-md-10 layout-main-section-wrapper">
       <div class="layout-main-section listview-main-section">
 
          <div class="frappe-list-area">

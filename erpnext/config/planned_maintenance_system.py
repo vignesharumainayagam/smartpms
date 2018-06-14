@@ -46,10 +46,8 @@ def get_data():
 					"name": "Asset Maintenance Team",
 				},
 				{
-					"type": "page",
-					"name": "maintenance-task",
-					"label": _("Maintenance Task"),
-					# "description": _("Point of Sale")
+					"type": "doctype",
+					"name": "Asset Maintenance Task",
 				},				
 				{
 					"type": "doctype",
