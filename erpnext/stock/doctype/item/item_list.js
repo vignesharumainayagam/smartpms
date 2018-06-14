@@ -17,6 +17,7 @@ frappe.listview_settings['Item'] = {
 		}
 	},
 	enable_tree:true,
+	columnFilter:"parent_item",
 	onload: function (doclist) {
 		// $(".btn-primary").hide();	
 	exec_treefilter('item','parent_item');

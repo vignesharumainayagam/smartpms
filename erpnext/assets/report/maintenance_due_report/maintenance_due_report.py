@@ -20,7 +20,7 @@ def execute(filters=None):
 		else:
 			row.append(due_report.maintenance_status)
 
-		row.append(due_report.maintenance_name)
+		row.append(due_report.maintenance_task)
 		row.append(due_report.asset_name)
 		row.append(due_report.periodicity)
 		row.append(due_report.last_completion_date)

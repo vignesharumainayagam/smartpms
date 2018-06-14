@@ -1,0 +1,24 @@
+{
+ "content": null, 
+ "creation": "2018-06-14 10:09:43.687850", 
+ "docstatus": 0, 
+ "doctype": "Page", 
+ "icon": "fa fa-tag", 
+ "idx": 0, 
+ "modified": "2018-06-14 10:09:53.915347", 
+ "modified_by": "Administrator", 
+ "module": "Planned Maintenance System", 
+ "name": "maintenance-task", 
+ "owner": "Administrator", 
+ "page_name": "Maintenance Task", 
+ "roles": [
+  {
+   "role": "All"
+  }
+ ], 
+ "script": null, 
+ "standard": "Yes", 
+ "style": null, 
+ "system_page": 0, 
+ "title": "Maintenance Task"
+}
