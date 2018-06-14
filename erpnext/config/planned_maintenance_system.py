@@ -101,12 +101,12 @@ def get_data():
 		{
 			"label": _("Stock & Requisition"),
 			"items": [
-				{
-					"type": "report",
-					"is_query_report": True,
-					"name": "Stock Balance",
-					"doctype": "Stock Ledger Entry"
-				},
+				# {
+				# 	"type": "report",
+				# 	"is_query_report": True,
+				# 	"name": "Stock Balance",
+				# 	"doctype": "Stock Ledger Entry"
+				# },
 				{
 					"type": "doctype",
 					"name": "Material Request",
